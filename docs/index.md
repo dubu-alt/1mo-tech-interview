@@ -14,19 +14,19 @@ hero:
 features:
   - icon: 🌐
     title: Web
-    details: 시맨틱 HTML, 반응형 CSS, 바닐라 JS로 포트폴리오 사이트를 만들며 정리한 프론트엔드 개념
+    details: 포트폴리오 사이트를 만들며 정리한 프론트엔드 개념 + CSS 기초 문법 정리 노트
   - icon: 🐍
     title: Language
     details: Python으로 콘솔 프로그램을 만들며 정리한 argparse, dataclass, 제너레이터, 데코레이터 등
   - icon: 💻
     title: Computer Science
-    details: Linux/OS, 자료구조(Redis 직접 구현), Database(SNS 서비스 설계)까지 실습 기반 CS 개념
+    details: Linux/OS, 자료구조(Redis 직접 구현), Database(SNS 서비스 설계 + 정규화/ERD 이론)까지 실습 기반 CS 개념
   - icon: 🧮
     title: Algorithm
-    details: Mini Git을 만들며 정리한 그래프, DAG, 위상정렬, BFS/DFS, 정렬 알고리즘
+    details: Mini Git 구현(그래프, DAG, 위상정렬, BFS/DFS)부터 실전 GitHub 협업(PR, 브랜치 전략, CI)까지
   - icon: ☁️
     title: Cloud
-    details: AWS 인프라 구축과 AI 기반 Git 커밋 메시지 생성기 프로젝트
+    details: AWS 인프라 구축, AI 기반 Git 커밋 메시지 생성기, Docker 컨테이너/이미지 개념
 ---
 
 ## 👶🏻 신입 개발자 전공 지식 & 기술 면접 백과사전 📖

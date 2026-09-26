@@ -86,6 +86,48 @@ export default defineConfig({
         ]
       },
       {
+        "text": "CSS 기초",
+        "collapsed": true,
+        "items": [
+          {
+            "text": "CSS 규칙과 스타일-내용 분리",
+            "link": "/web/css-basics/01-css-규칙과-스타일-분리"
+          },
+          {
+            "text": "id와 class 선택자",
+            "link": "/web/css-basics/02-id와-class-선택자"
+          },
+          {
+            "text": "CSS 색상과 크기 단위",
+            "link": "/web/css-basics/03-색상과-크기-단위"
+          },
+          {
+            "text": "CSS 코멘트 달기",
+            "link": "/web/css-basics/04-코멘트-달기"
+          },
+          {
+            "text": "자주 쓰는 CSS 스타일 속성",
+            "link": "/web/css-basics/05-자주-쓰는-스타일-속성"
+          },
+          {
+            "text": "CSS 박스 모델",
+            "link": "/web/css-basics/06-박스-모델"
+          },
+          {
+            "text": "padding, margin과 마진 상쇄",
+            "link": "/web/css-basics/07-padding-margin과-마진-상쇄"
+          },
+          {
+            "text": "border, box-sizing, overflow",
+            "link": "/web/css-basics/08-border-box-sizing-overflow"
+          },
+          {
+            "text": "CSS 기초 개념 한 줄 요약",
+            "link": "/web/css-basics/09-css-개념-한줄-요약"
+          }
+        ]
+      },
+      {
         "text": "JavaScript 설계",
         "collapsed": true,
         "items": [
@@ -386,6 +428,42 @@ export default defineConfig({
           {
             "text": "인덱스란?",
             "link": "/cs/database/14-인덱스란"
+          },
+          {
+            "text": "릴레이션이란? (튜플/애트리뷰트/도메인)",
+            "link": "/cs/database/15-릴레이션과-기본-용어"
+          },
+          {
+            "text": "스키마 3단계와 데이터 독립성",
+            "link": "/cs/database/16-스키마와-데이터-독립성"
+          },
+          {
+            "text": "엔터티 사이의 관계: 존재 관계 vs 행위 관계",
+            "link": "/cs/database/17-엔터티와-관계"
+          },
+          {
+            "text": "ERD 표기법: 까마귀발(Crow's Foot)",
+            "link": "/cs/database/18-erd-표기법"
+          },
+          {
+            "text": "속성(Attribute)은 어떻게 나뉘나",
+            "link": "/cs/database/19-속성의-분류"
+          },
+          {
+            "text": "식별자의 종류: 주식별자, 보조식별자, 인조식별자",
+            "link": "/cs/database/20-식별자의-종류"
+          },
+          {
+            "text": "함수 종속성: X를 알면 Y를 알 수 있다",
+            "link": "/cs/database/21-함수-종속성"
+          },
+          {
+            "text": "정규화: 중복 데이터를 안 두는 기술",
+            "link": "/cs/database/22-정규화"
+          },
+          {
+            "text": "조인을 집합으로 보면: INNER vs OUTER",
+            "link": "/cs/database/23-조인의-이론적-분류"
           }
         ]
       }
@@ -395,6 +473,10 @@ export default defineConfig({
     "text": "📌 Algorithm",
     "collapsed": true,
     "items": [
+      {
+        "text": "Mini Git 구현",
+        "collapsed": true,
+        "items": [
       {
         "text": "Git과 커밋이란?",
         "link": "/algorithm/01-git과-커밋이란"
@@ -435,6 +517,74 @@ export default defineConfig({
         "text": "한 줄 요약",
         "link": "/algorithm/10-한-줄-요약"
       }
+        ]
+      },
+      {
+        "text": "Git 협업 (B2-2)",
+        "collapsed": true,
+        "items": [
+          {
+            "text": "Pull Request란?",
+            "link": "/algorithm/git-collaboration/01-pull-request-개념"
+          },
+          {
+            "text": "Merge 전략 3종 비교",
+            "link": "/algorithm/git-collaboration/02-merge-전략-3종-비교"
+          },
+          {
+            "text": "Fork와 오픈소스 기여",
+            "link": "/algorithm/git-collaboration/03-fork와-오픈소스-기여"
+          },
+          {
+            "text": "Merge 충돌, 해결과 예방",
+            "link": "/algorithm/git-collaboration/04-merge-충돌-해결과-최소화"
+          },
+          {
+            "text": "GitHub Repository 환경설정",
+            "link": "/algorithm/git-collaboration/05-repository-환경설정"
+          },
+          {
+            "text": "브랜치 보호 규칙",
+            "link": "/algorithm/git-collaboration/06-브랜치-보호-규칙"
+          },
+          {
+            "text": "GitHub로 코드 리뷰하기",
+            "link": "/algorithm/git-collaboration/07-코드-리뷰-실전"
+          },
+          {
+            "text": "Conventional Commit: 커밋 메시지 규칙",
+            "link": "/algorithm/git-collaboration/08-커밋-메시지-컨벤션"
+          },
+          {
+            "text": "Linting과 Formatter",
+            "link": "/algorithm/git-collaboration/09-linting과-formatter"
+          },
+          {
+            "text": "GitHub Flow",
+            "link": "/algorithm/git-collaboration/10-github-flow"
+          },
+          {
+            "text": "Git Flow vs GitHub Flow",
+            "link": "/algorithm/git-collaboration/11-git-flow-vs-github-flow"
+          },
+          {
+            "text": "버전 관리 전략: Semantic Versioning",
+            "link": "/algorithm/git-collaboration/12-버전-관리-전략"
+          },
+          {
+            "text": "협업 자동화: .github 디렉토리",
+            "link": "/algorithm/git-collaboration/13-협업-자동화"
+          },
+          {
+            "text": "GitHub Actions로 CI 구현하기",
+            "link": "/algorithm/git-collaboration/14-github-actions-ci"
+          },
+          {
+            "text": "한눈에 보는 GitHub 협업",
+            "link": "/algorithm/git-collaboration/15-한눈에-보는-git-collaboration"
+          }
+        ]
+      }
     ]
   },
   {
@@ -448,6 +598,18 @@ export default defineConfig({
       {
         "text": "ai-gitgen — AI 기반 Git 커밋/PR 자동 생성기",
         "link": "/cloud/02-ai-gitgen"
+      },
+      {
+        "text": "컨테이너와 이미지란?",
+        "link": "/cloud/03-컨테이너와-이미지란"
+      },
+      {
+        "text": "이미지 빌드와 Docker Hub 배포",
+        "link": "/cloud/04-이미지-빌드와-도커허브-배포"
+      },
+      {
+        "text": "docker exec와 docker attach 차이",
+        "link": "/cloud/05-docker-exec와-attach-차이"
       }
     ]
   }
