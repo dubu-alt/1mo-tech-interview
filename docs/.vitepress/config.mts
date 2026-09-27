@@ -1,3 +1,4 @@
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
@@ -6,6 +7,17 @@ export default defineConfig({
   lang: 'ko-KR',
   base: '/',
   head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
+  vite: {
+    resolve: {
+      alias: [
+        {
+          // 기본 검색 버튼(VPNavBarSearch)을 Spotlight 검색 버튼으로 교체
+          find: /^.*\/VPNavBarSearch\.vue$/,
+          replacement: fileURLToPath(new URL('./theme/components/NavSearch.vue', import.meta.url)),
+        },
+      ],
+    },
+  },
   themeConfig: {
     logo: '/favicon.svg',
     nav: [

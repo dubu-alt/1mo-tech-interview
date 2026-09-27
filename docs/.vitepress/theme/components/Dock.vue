@@ -3,25 +3,17 @@
 // 21st.dev의 "Dock" (anurag-mishra22/dock-two, MIT) 디자인을 참고해 Vue + CSS로 옮긴 것
 // - 둥실 떠 있는 애니메이션, 호버 시 살짝 커지며 위로 올라가는 아이콘, 라벨 툴팁
 // - 현재 보고 있는 분류는 점(•)으로 표시
-import { computed, inject } from 'vue'
+// - 글을 읽으며 아래로 스크롤하면 자동으로 숨고, 위로 스크롤하거나 페이지 맨 위/끝에 오면 다시 나타남
+// - 접기 버튼으로 동그란 버튼 하나로 줄일 수 있고, 접은 상태는 다음 방문 때도 기억함
+import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useData, useRoute, withBase } from 'vitepress'
 import { dockSections, flattenLinks, normalizePath } from '../categories'
+import { ICONS } from '../icons'
+import { openSpotlight } from '../spotlight'
 
 const { theme, isDark } = useData()
 const route = useRoute()
 
-// lucide 아이콘 (ISC/MIT) path 데이터
-const ICONS: Record<string, string> = {
-  home: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
-  globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
-  code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-  cpu: '<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>',
-  branch: '<line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>',
-  cloud: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
-  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
-  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
-  moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
-}
 
 const current = computed(() => normalizePath(route.path))
 
@@ -41,22 +33,83 @@ const navItems = computed(() => {
   return [home, ...sections]
 })
 
-// VitePress 기본 검색(⌘K) 창 열기
+// Spotlight 검색 창 열기
 function openSearch() {
-  const btn = document.querySelector<HTMLButtonElement>('.VPNavBarSearch button, #local-search button')
-  if (btn) btn.click()
-  else window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true, ctrlKey: true }))
+  openSpotlight()
 }
 
 // VitePress 기본 다크 모드 토글 재사용 (전환 애니메이션 포함)
 const toggleAppearance = inject<() => void>('toggle-appearance', () => {
   isDark.value = !isDark.value
 })
+
+// ---- 접기 (localStorage에 기억) ----
+const STORAGE_KEY = '1mo-dock-collapsed'
+const collapsed = ref(false)
+function setCollapsed(v: boolean) {
+  collapsed.value = v
+  hidden.value = false
+  try {
+    localStorage.setItem(STORAGE_KEY, v ? '1' : '0')
+  } catch {}
+}
+
+// ---- 스크롤 방향에 따른 자동 숨김 ----
+const hidden = ref(false)
+const ready = ref(false) // 저장된 접기 상태를 읽기 전 깜빡임 방지
+const focused = ref(false) // 키보드로 독에 들어오면 숨기지 않음
+const THRESHOLD = 6 // 이만큼(px) 이상 움직였을 때만 방향으로 인정
+let lastY = 0
+let ticking = false
+
+function update() {
+  const y = window.scrollY
+  const dy = y - lastY
+  const atTop = y < 80
+  const atBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 48
+  if (atTop || atBottom) hidden.value = false
+  else if (dy > THRESHOLD) hidden.value = true
+  else if (dy < -THRESHOLD) hidden.value = false
+  if (Math.abs(dy) > THRESHOLD || atTop || atBottom) lastY = y
+  ticking = false
+}
+function onScroll() {
+  if (ticking) return
+  ticking = true
+  requestAnimationFrame(update)
+}
+
+onMounted(() => {
+  try {
+    collapsed.value = localStorage.getItem(STORAGE_KEY) === '1'
+  } catch {}
+  lastY = window.scrollY
+  window.addEventListener('scroll', onScroll, { passive: true })
+  requestAnimationFrame(() => (ready.value = true))
+})
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
+
+// 다른 페이지로 이동하면 다시 보여 줌
+watch(
+  () => route.path,
+  () => {
+    hidden.value = false
+    lastY = 0
+  },
+)
 </script>
 
 <template>
-  <nav class="dock-wrap" aria-label="빠른 이동">
-    <div class="dock">
+  <nav
+    class="dock-wrap"
+    :class="{ ready, collapsed, hidden: hidden && !focused }"
+    aria-label="빠른 이동"
+    @focusin="focused = true"
+    @focusout="focused = false"
+  >
+    <!-- type="transition": 독의 무한 떠다님 애니메이션 때문에 전환이 안 끝나는 문제 방지 -->
+    <Transition name="dock-swap" mode="out-in" type="transition">
+    <div v-if="!collapsed" key="dock" class="dock">
       <a
         v-for="item in navItems"
         :key="item.id"
@@ -80,7 +133,18 @@ const toggleAppearance = inject<() => void>('toggle-appearance', () => {
         <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="isDark ? ICONS.sun : ICONS.moon" />
         <span class="dock-tip">{{ isDark ? '라이트 모드' : '다크 모드' }}</span>
       </button>
+      <button type="button" class="dock-btn dock-fold" aria-label="독 접기" @click="setCollapsed(true)">
+        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.fold" />
+        <span class="dock-tip">접기</span>
+      </button>
     </div>
+
+    <!-- 접힌 상태: 오른쪽 아래 동그란 버튼 하나 -->
+    <button v-else key="fab" type="button" class="dock-fab" aria-label="메뉴 펼치기" @click="setCollapsed(false)">
+      <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.grid" />
+      <span class="dock-tip">메뉴 펼치기</span>
+    </button>
+    </Transition>
   </nav>
 </template>
 
@@ -94,7 +158,74 @@ const toggleAppearance = inject<() => void>('toggle-appearance', () => {
   display: flex;
   justify-content: center;
   pointer-events: none;
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s;
 }
+.dock-wrap.ready {
+  opacity: 1;
+}
+/* 스크롤 중 자동 숨김: 화면 아래로 쏙 내려감 */
+.dock-wrap.hidden {
+  transform: translateY(calc(100% + 40px));
+  opacity: 0;
+}
+.dock-wrap.hidden > * {
+  pointer-events: none !important;
+}
+/* 접힌 상태: 오른쪽 아래로 */
+.dock-wrap.collapsed {
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+.dock-swap-enter-active,
+.dock-swap-leave-active {
+  transition: opacity 0.18s ease;
+}
+.dock-swap-enter-from,
+.dock-swap-leave-to {
+  opacity: 0;
+}
+
+.dock-fab {
+  pointer-events: auto;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--vp-c-divider);
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.06);
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.dock-fab:hover {
+  color: var(--vp-c-brand-1);
+  transform: translateY(-2px) scale(1.06);
+}
+.dock-fab:active {
+  transform: scale(0.94);
+}
+.dock-fab:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+.dock-fab:hover .dock-tip,
+.dock-fab:focus-visible .dock-tip {
+  opacity: 1;
+}
+.dock-fab .dock-tip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
 .dock {
   pointer-events: auto;
   display: flex;
@@ -187,6 +318,11 @@ const toggleAppearance = inject<() => void>('toggle-appearance', () => {
   opacity: 1;
 }
 
+.dock-fold {
+  width: 30px;
+  color: var(--vp-c-text-3);
+}
+
 .dock-sep {
   width: 1px;
   height: 24px;
@@ -203,6 +339,8 @@ const toggleAppearance = inject<() => void>('toggle-appearance', () => {
   }
   .dock-btn.active:hover { color: var(--vp-c-brand-1); }
   .dock-btn:hover .dock-tip { opacity: 0; }
+  .dock-fab:hover { transform: none; color: var(--vp-c-text-2); }
+  .dock-fab:hover .dock-tip { opacity: 0; }
   .dock-btn:active { background: var(--vp-c-default-soft); transform: scale(0.92); }
 }
 
@@ -211,17 +349,28 @@ const toggleAppearance = inject<() => void>('toggle-appearance', () => {
   .dock-wrap { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
   .dock { gap: 2px; padding: 6px; border-radius: 16px; }
   .dock-btn { width: 38px; height: 38px; border-radius: 10px; }
+  .dock-fold { width: 26px; }
   .dock-icon { width: 19px; height: 19px; }
   .dock-sep { margin: 0 2px; height: 20px; }
+  .dock-wrap.collapsed { padding-right: 16px; }
+  .dock-fab { width: 44px; height: 44px; }
+}
+@media (max-width: 400px) {
+  .dock-btn { width: 35px; height: 35px; }
+  .dock-fold { width: 24px; }
+  .dock-icon { width: 18px; height: 18px; }
 }
 @media (max-width: 350px) {
-  .dock-btn { width: 33px; height: 33px; }
-  .dock-icon { width: 17px; height: 17px; }
+  .dock-btn { width: 31px; height: 31px; }
+  .dock-fold { width: 22px; }
+  .dock-icon { width: 16px; height: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .dock { animation: none; }
-  .dock-btn { transition: none; }
+  .dock-btn,
+  .dock-fab,
+  .dock-wrap { transition: none; }
 }
 @media print {
   .dock-wrap { display: none; }
