@@ -58,7 +58,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/dubu-alt' }
     ],
     search: { provider: 'local' },
-    outline: { label: '이 페이지 목차' },
+    outline: { level: [2, 4], label: '이 페이지 목차' },
     docFooter: { prev: '이전', next: '다음' },
     darkModeSwitchLabel: '다크 모드',
     returnToTopLabel: '맨 위로'
