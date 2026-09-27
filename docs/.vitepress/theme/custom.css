@@ -1,0 +1,7 @@
+/* 하단 독에 본문/사이드바 끝부분이 가려지지 않도록 여유 공간 확보 */
+.VPContent {
+  padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+}
+.VPSidebar {
+  padding-bottom: 104px !important;
+}
