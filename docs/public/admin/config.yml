@@ -62,7 +62,7 @@ collections:
         modes: [raw, rich_text]
         hint: 제목(#)은 쓰지 않아도 돼요. ## 소제목부터 쓰면 돼요.
   - name: web-css
-    label: "Web · CSS 설계"
+    label: "Web · CSS"
     label_singular: 글
     folder: docs/web/css
     create: true
@@ -73,19 +73,6 @@ collections:
     summary: "{{title}}"
     sortable_fields: [title]
     preview_path: "web/css/{{slug}}.html"
-    fields: *post_fields
-  - name: web-css-basics
-    label: "Web · CSS 기초"
-    label_singular: 글
-    folder: docs/web/css-basics
-    create: true
-    delete: true
-    extension: md
-    format: frontmatter
-    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
-    summary: "{{title}}"
-    sortable_fields: [title]
-    preview_path: "web/css-basics/{{slug}}.html"
     fields: *post_fields
   - name: python
     label: "Language · Python"
@@ -99,6 +86,19 @@ collections:
     summary: "{{title}}"
     sortable_fields: [title]
     preview_path: "language/python/{{slug}}.html"
+    fields: *post_fields
+  - name: cs-linux
+    label: "CS · Linux"
+    label_singular: 글
+    folder: docs/cs/linux
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cs/linux/{{slug}}.html"
     fields: *post_fields
   - name: cs-os
     label: "CS · 운영체제"

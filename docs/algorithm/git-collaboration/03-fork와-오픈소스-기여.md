@@ -24,4 +24,10 @@ title: "Fork와 오픈소스 기여"
 
 기여 방법은 생각보다 다양합니다. 버그 리포트, 문서 개선, 테스트 작성은 막 시작한 사람도 접근하기 쉬운 방법입니다. GitHub의 **Good First Issue** 라벨을 찾아보면 초보자도 도전할 만한 이슈들을 모아볼 수 있습니다. [goodfirstissue.dev](https://goodfirstissue.dev/) 같은 사이트에서 원하는 언어로 필터링해서 첫 기여를 시도해볼 수 있습니다.
 
+## 정리
+
+| 개념 | 한 줄 요약 |
+|---|---|
+| Fork | 원격 저장소를 내 계정으로 통째로 복사, 오픈소스 기여의 기본 |
+
 > 출처: [Codyssey-B1/B2-2](https://github.com/dubu-alt/Codyssey-B1/tree/main/B2-2)

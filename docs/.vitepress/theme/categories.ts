@@ -27,7 +27,7 @@ export const categories: Category[] = [
     icon: '🎨',
     title: 'CSS',
     desc: 'CSS 기초 문법부터 변수, Flexbox, Grid 설계까지',
-    match: under('/web/css-basics/', '/web/css/'),
+    match: under('/web/css/'),
   },
   {
     id: 'python',
@@ -41,7 +41,7 @@ export const categories: Category[] = [
     icon: '🐧',
     title: '운영체제 · Linux',
     desc: '권한, 프로세스, 메모리, 데드락까지 실습 기반 OS 개념',
-    match: under('/cs/os/'),
+    match: under('/cs/linux/', '/cs/os/'),
   },
   {
     id: 'ds',
