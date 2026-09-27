@@ -5,6 +5,7 @@
 // - 열릴 때 흐림(blur) + 살짝 늘어났다 돌아오는 애니메이션
 // - 데스크톱: 검색창에 마우스를 올리면 분류 바로가기 버블이 끈적하게(gooey) 튀어나옴
 // - 모바일: 검색어가 없을 때 분류 바로가기를 아이콘 줄로 표시
+// - 한글로 검색해도 영어로 적힌 개념을 찾음 (synonyms.ts 사전, 예: 도커 → Docker)
 // - ⌘K / Ctrl+K / "/" 로 열고, ↑↓ 로 이동, Enter 로 열기, Esc 로 닫기
 // @ts-ignore - VitePress가 빌드 시 만들어 주는 가상 모듈
 import localSearchIndex from '@localSearchIndex'
@@ -13,6 +14,7 @@ import { computed, markRaw, nextTick, onMounted, onUnmounted, ref, shallowRef, w
 import { useData, useRoute, useRouter, withBase } from 'vitepress'
 import { categories, dockSections, flattenLinks, normalizePath } from '../categories'
 import { ICONS } from '../icons'
+import { expandToken } from '../synonyms'
 import { closeSpotlight, openSpotlight, spotlightOpen, toggleSpotlight } from '../spotlight'
 
 interface Result {
@@ -98,12 +100,25 @@ function highlight(text: string, terms: string[]) {
   return safe.replace(new RegExp(`(${words.join('|')})`, 'gi'), '<mark>$1</mark>')
 }
 
+// 검색어의 각 단어를 같은 뜻 단어들로 넓혀서 검색
+// - 단어끼리는 AND (모두 포함된 문서 우선), 결과가 없으면 OR 로 한 번 더
+function runSearch(ms: MiniSearch<any>, q: string) {
+  const tokens = q.split(/\s+/).filter(Boolean)
+  const groups = tokens.map((t) => expandToken(t))
+  const tree = (combineWith: 'AND' | 'OR') => ({
+    combineWith,
+    queries: groups.map((alts) => ({ combineWith: 'OR', queries: alts })),
+  })
+  let found = ms.search(tree('AND') as any)
+  if (!found.length && tokens.length > 1) found = ms.search(tree('OR') as any)
+  return { found, terms: groups.flat() }
+}
+
 const results = computed<Result[]>(() => {
   const q = query.value.trim()
   if (!q || !mini.value) return []
-  const terms = q.split(/\s+/)
-  return mini.value
-    .search(q)
+  const { found, terms } = runSearch(mini.value, q)
+  return found
     .slice(0, 30)
     .map((r: any) => {
       const path = normalizePath(String(r.id).split('#')[0])
@@ -145,6 +160,12 @@ function moveSelection(step: number) {
   nextTick(() => {
     listEl.value?.querySelector('.sl-card.active')?.scrollIntoView({ block: 'nearest' })
   })
+}
+
+// v-model은 한글 조합 중(예: '우'를 치는 중)에는 값을 반영하지 않아서
+// 안내 문구가 조합 중인 글자와 겹쳐 보였다 → input 이벤트마다 바로 반영
+function onInput(e: Event) {
+  query.value = (e.target as HTMLInputElement).value
 }
 
 function onInputKeydown(e: KeyboardEvent) {
@@ -254,7 +275,7 @@ onUnmounted(() => {
                 </Transition>
                 <input
                   ref="inputEl"
-                  v-model="query"
+                  :value="query"
                   class="sl-input"
                   type="text"
                   enterkeyhint="search"
@@ -262,6 +283,7 @@ onUnmounted(() => {
                   autocapitalize="off"
                   spellcheck="false"
                   aria-label="문서 검색"
+                  @input="onInput"
                   @keydown="onInputKeydown"
                 />
               </div>
