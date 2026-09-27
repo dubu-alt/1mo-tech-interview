@@ -87,19 +87,6 @@ collections:
     sortable_fields: [title]
     preview_path: "web/css-basics/{{slug}}.html"
     fields: *post_fields
-  - name: web-js
-    label: "Web · JavaScript 설계"
-    label_singular: 글
-    folder: docs/web/js
-    create: true
-    delete: true
-    extension: md
-    format: frontmatter
-    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
-    summary: "{{title}}"
-    sortable_fields: [title]
-    preview_path: "web/js/{{slug}}.html"
-    fields: *post_fields
   - name: python
     label: "Language · Python"
     label_singular: 글

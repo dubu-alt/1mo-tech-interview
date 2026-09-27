@@ -75,7 +75,6 @@ export function buildSidebar(): Item[] {
       group('주요 기능', items('web/features')),
       group('CSS 설계', items('web/css')),
       group('CSS 기초', items('web/css-basics')),
-      group('JavaScript 설계', items('web/js')),
     ]),
     group('📌 Language', items('language/python')),
     group('📌 Computer Science', [

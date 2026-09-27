@@ -20,7 +20,7 @@ export const categories: Category[] = [
     icon: '🧩',
     title: '웹 기능 구현',
     desc: '반응형, 다크 모드, API 연동 등 포트폴리오 기능과 JS 설계',
-    match: under('/web/features/', '/web/js/'),
+    match: under('/web/features/'),
   },
   {
     id: 'css',
