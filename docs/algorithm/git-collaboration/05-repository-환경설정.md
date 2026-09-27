@@ -1,4 +1,6 @@
-# GitHub Repository 환경설정
+---
+title: "GitHub Repository 환경설정"
+---
 
 프로젝트 상단바의 **Settings**에서 저장소 전반의 규칙을 설정할 수 있습니다. (Settings가 안 보인다면 권한이 없는 것이니 요청해서 받으면 됩니다.) 좌측 네비게이션의 **General** 메뉴에서 중요한 설정 세 가지를 짚어보겠습니다.
 

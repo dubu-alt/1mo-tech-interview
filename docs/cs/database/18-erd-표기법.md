@@ -1,4 +1,6 @@
-# ERD 표기법: 까마귀발(Crow's Foot)
+---
+title: "ERD 표기법: 까마귀발(Crow's Foot)"
+---
 
 **ERD(Entity Relationship Diagram)**는 엔터티와 관계를 그림으로 표현한 것입니다. 표기법은 여러 종류가 있지만(Peter Chen, 정보공학, Ellis-Barker, IDEF1X, UML 등), 실무와 툴에서 가장 흔히 쓰이는 건 **IE(Information Engineering) Crow's Foot**, 일명 "까마귀발" 표기법입니다.
 

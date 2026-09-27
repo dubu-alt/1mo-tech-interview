@@ -1,4 +1,6 @@
-# 시그널 (Signal) - SIGKILL
+---
+title: "시그널 (Signal) - SIGKILL"
+---
 
 ### 비유: 프로세스에게 보내는 메시지
 

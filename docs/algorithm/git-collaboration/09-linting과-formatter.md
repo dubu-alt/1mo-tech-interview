@@ -1,4 +1,7 @@
-# Linting과 Formatter로 스타일 자동화하기
+---
+title: "Linting과 Formatter로 스타일 자동화하기"
+sidebar: "Linting과 Formatter"
+---
 
 개발자는 반복 작업을 극도로 싫어합니다. 코드 스타일 규칙을 사람이 외우고 매번 손으로 맞추는 건 비효율적이죠. 그래서 등장한 게 **Linting**과 **Formatter**입니다.
 

@@ -1,4 +1,6 @@
-# GitHub Flow
+---
+title: "GitHub Flow"
+---
 
 **GitHub Flow**는 GitHub가 제안한, 단순하고 명확한 브랜치 전략입니다. 핵심은 하나입니다.
 

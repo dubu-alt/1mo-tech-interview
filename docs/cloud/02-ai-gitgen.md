@@ -1,4 +1,6 @@
-# ai-gitgen — AI 기반 Git 커밋/PR 자동 생성기
+---
+title: "ai-gitgen — AI 기반 Git 커밋/PR 자동 생성기"
+---
 
 `git status`, `git diff` 결과를 AI API(기본: **Google AI Studio Gemini**, OpenAI 호환 Chat Completions)에 전달해
 **커밋 메시지**와 **PR 제목/본문 초안**을 자동 생성하는 Python CLI 도구입니다.

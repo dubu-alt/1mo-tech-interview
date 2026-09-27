@@ -1,4 +1,6 @@
-# 참조 무결성(Referential Integrity)
+---
+title: "참조 무결성(Referential Integrity)"
+---
 
 "자식 테이블의 FK 값은 반드시 부모 테이블에 실제로 존재해야 한다"는 규칙입니다. SQLite는
 이 검사가 기본적으로 꺼져 있어서, 모든 스크립트 맨 위에 `PRAGMA foreign_keys = ON;`을 켜야만

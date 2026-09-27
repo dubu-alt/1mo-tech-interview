@@ -1,4 +1,6 @@
-# docker exec와 docker attach 차이
+---
+title: "docker exec와 docker attach 차이"
+---
 
 이미 실행 중인 컨테이너 안을 들여다보는 방법에는 **exec**와 **attach** 두 가지가 있는데, 둘은 비슷해 보여도 동작 방식이 완전히 다릅니다.
 

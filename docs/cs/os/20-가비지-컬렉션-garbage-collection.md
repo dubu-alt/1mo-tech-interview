@@ -1,4 +1,6 @@
-# 가비지 컬렉션 (Garbage Collection)
+---
+title: "가비지 컬렉션 (Garbage Collection)"
+---
 
 ### 비유: 자동 청소부 vs 수동 청소
 

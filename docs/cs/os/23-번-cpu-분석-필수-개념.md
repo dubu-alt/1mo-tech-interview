@@ -1,4 +1,6 @@
-# 번 (CPU 분석) - 필수 개념
+---
+title: "번 (CPU 분석) - 필수 개념"
+---
 
 ### 1. CPU 스케줄링 (CPU Scheduling)
 

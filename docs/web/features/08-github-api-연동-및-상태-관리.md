@@ -1,4 +1,6 @@
-# GitHub API 연동 및 상태 관리
+---
+title: "GitHub API 연동 및 상태 관리"
+---
 
 `fetchProjects()`는 `state.projects`라는 단일 상태를 기준으로 로딩 → 성공/에러/빈 상태를 순서대로 반영합니다.
 

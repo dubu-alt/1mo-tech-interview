@@ -1,4 +1,6 @@
-# REPL - 대화형 프로그램 만들기
+---
+title: "REPL - 대화형 프로그램 만들기"
+---
 
 REPL = Read(읽기) → Eval(실행) → Print(출력) → Loop(반복).
 

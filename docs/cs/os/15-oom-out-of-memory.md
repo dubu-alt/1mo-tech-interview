@@ -1,4 +1,6 @@
-# OOM (Out of Memory)
+---
+title: "OOM (Out of Memory)"
+---
 
 ### 비유: 주차장이 꽉 찬 상황
 

@@ -1,4 +1,6 @@
-# 번 (Deadlock 분석) - 필수 개념
+---
+title: "번 (Deadlock 분석) - 필수 개념"
+---
 
 ### 1. 멀티스레드 (Multithreading)
 

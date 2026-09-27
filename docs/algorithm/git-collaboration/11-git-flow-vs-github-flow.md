@@ -1,4 +1,7 @@
-# Git Flow vs GitHub Flow, 그리고 다른 전략들
+---
+title: "Git Flow vs GitHub Flow, 그리고 다른 전략들"
+sidebar: "Git Flow vs GitHub Flow"
+---
 
 ## 왜 두 전략이 따로 생겼을까
 

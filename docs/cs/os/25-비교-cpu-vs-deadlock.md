@@ -1,4 +1,6 @@
-# 비교: CPU vs Deadlock
+---
+title: "비교: CPU vs Deadlock"
+---
 
 | 항목 | CPU (02번) | Deadlock (03번) |
 |------|-----------|-----------------|

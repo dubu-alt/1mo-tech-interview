@@ -1,4 +1,6 @@
-# 프로세스 & 스레드 (Process & Thread)
+---
+title: "프로세스 & 스레드 (Process & Thread)"
+---
 
 ### 비유: 식당으로 이해하기
 

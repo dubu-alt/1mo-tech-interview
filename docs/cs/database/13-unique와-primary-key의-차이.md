@@ -1,4 +1,6 @@
-# UNIQUE와 PRIMARY KEY의 차이
+---
+title: "UNIQUE와 PRIMARY KEY의 차이"
+---
 
 둘 다 "중복을 막는다"는 점은 같지만, PK는 테이블마다 사실상 하나(그 테이블의 정체성)이고
 `NULL`을 허용하지 않는 반면, `UNIQUE`는 한 테이블에 여러 개 걸 수 있습니다. 이 프로젝트에서는

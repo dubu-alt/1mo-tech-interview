@@ -1,4 +1,6 @@
-# 기본키(Primary Key, PK)
+---
+title: "기본키(Primary Key, PK)"
+---
 
 한 테이블 안에서 각 행을 유일하게 식별하는 값입니다. `NULL`이 될 수 없고, 중복될 수 없습니다.
 이 프로젝트에서는 4개 테이블 모두 `INTEGER PRIMARY KEY AUTOINCREMENT`를 써서, 행을 추가할

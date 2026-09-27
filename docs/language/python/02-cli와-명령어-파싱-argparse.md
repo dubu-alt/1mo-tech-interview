@@ -1,4 +1,6 @@
-# CLI와 명령어 파싱 (argparse)
+---
+title: "CLI와 명령어 파싱 (argparse)"
+---
 
 **파싱(parsing)** = 사용자가 입력한 글자를 의미별로 쪼개서 이해하는 것.
 

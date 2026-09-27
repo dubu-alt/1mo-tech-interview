@@ -1,0 +1,193 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# 1mo.dev 관리자 페이지(/admin) 설정
+# - 글을 저장하면 GitHub 저장소(main)에 바로 커밋되고, GitHub Actions가 1~2분 안에 사이트에 배포한다
+# - 새 폴더(분류)를 만들면 여기와 docs/.vitepress/sidebar.ts 에 함께 추가해야 한다
+
+backend:
+  name: github
+  repo: dubu-alt/1mo-tech-interview
+  branch: main
+  commit_messages:
+    create: "docs: {{slug}} 글 추가"
+    update: "docs: {{slug}} 글 수정"
+    delete: "docs: {{slug}} 글 삭제"
+    uploadMedia: "docs: 이미지 업로드 ({{path}})"
+    deleteMedia: "docs: 이미지 삭제 ({{path}})"
+
+site_url: https://1mo.dev
+display_url: https://1mo.dev
+
+# 이미지는 docs/public/images 에 저장되고, 글에는 /images/파일이름 으로 들어간다
+media_folder: docs/public/images
+public_folder: /images
+
+# 새 글 파일 이름: 날짜-제목 (한글 유지)
+slug:
+  encoding: unicode
+  clean_accents: false
+  sanitize_replacement: "-"
+
+collections:
+  - name: web-features
+    label: "Web · 주요 기능"
+    label_singular: 글
+    folder: docs/web/features
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "web/features/{{slug}}.html"
+    fields: &post_fields
+      - label: 제목
+        name: title
+        widget: string
+        hint: 페이지 맨 위 제목이자 사이드바 이름이에요.
+      - label: 사이드바 이름 (선택)
+        name: sidebar
+        widget: string
+        required: false
+        hint: 제목이 길 때 사이드바에만 짧게 보여 줄 이름. 비워 두면 제목을 그대로 써요.
+      - label: 임시저장 (비공개)
+        name: draft
+        widget: boolean
+        required: false
+        default: false
+        hint: 켜 두면 사이트에 공개되지 않아요. 다 쓰고 끄면 공개돼요.
+      - label: 본문
+        name: body
+        widget: markdown
+        modes: [raw, rich_text]
+        hint: 제목(#)은 쓰지 않아도 돼요. ## 소제목부터 쓰면 돼요.
+  - name: web-css
+    label: "Web · CSS 설계"
+    label_singular: 글
+    folder: docs/web/css
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "web/css/{{slug}}.html"
+    fields: *post_fields
+  - name: web-css-basics
+    label: "Web · CSS 기초"
+    label_singular: 글
+    folder: docs/web/css-basics
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "web/css-basics/{{slug}}.html"
+    fields: *post_fields
+  - name: web-js
+    label: "Web · JavaScript 설계"
+    label_singular: 글
+    folder: docs/web/js
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "web/js/{{slug}}.html"
+    fields: *post_fields
+  - name: python
+    label: "Language · Python"
+    label_singular: 글
+    folder: docs/language/python
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "language/python/{{slug}}.html"
+    fields: *post_fields
+  - name: cs-os
+    label: "CS · 운영체제"
+    label_singular: 글
+    folder: docs/cs/os
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cs/os/{{slug}}.html"
+    fields: *post_fields
+  - name: cs-ds
+    label: "CS · 자료구조"
+    label_singular: 글
+    folder: docs/cs/data-structure
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cs/data-structure/{{slug}}.html"
+    fields: *post_fields
+  - name: cs-db
+    label: "CS · 데이터베이스"
+    label_singular: 글
+    folder: docs/cs/database
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cs/database/{{slug}}.html"
+    fields: *post_fields
+  - name: algo-minigit
+    label: "Algorithm · Mini Git 구현"
+    label_singular: 글
+    folder: docs/algorithm
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "algorithm/{{slug}}.html"
+    fields: *post_fields
+  - name: algo-git
+    label: "Algorithm · Git 협업"
+    label_singular: 글
+    folder: docs/algorithm/git-collaboration
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "algorithm/git-collaboration/{{slug}}.html"
+    fields: *post_fields
+  - name: cloud
+    label: "Cloud"
+    label_singular: 글
+    folder: docs/cloud
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cloud/{{slug}}.html"
+    fields: *post_fields

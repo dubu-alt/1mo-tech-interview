@@ -1,4 +1,6 @@
-# REPL과 명령 파싱
+---
+title: "REPL과 명령 파싱"
+---
 
 ```python
 while True:

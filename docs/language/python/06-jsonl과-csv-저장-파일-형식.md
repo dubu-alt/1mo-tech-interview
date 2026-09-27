@@ -1,4 +1,6 @@
-# JSONL과 CSV - 저장 파일 형식
+---
+title: "JSONL과 CSV - 저장 파일 형식"
+---
 
 ### JSONL (JSON Lines)
 한 줄에 데이터 하나(JSON 형태). Python의 딕셔너리와 거의 1:1로 변환되어 편합니다.

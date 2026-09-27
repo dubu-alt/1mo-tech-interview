@@ -1,4 +1,6 @@
-# border, box-sizing, overflow
+---
+title: "border, box-sizing, overflow"
+---
 
 ## border와 border-radius
 

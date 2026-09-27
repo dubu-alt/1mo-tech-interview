@@ -1,4 +1,6 @@
-# 정렬 알고리즘 직접 구현하기 (merge sort)
+---
+title: "정렬 알고리즘 직접 구현하기 (merge sort)"
+---
 
 `sorted()`, `list.sort()` 금지! 직접 만듭니다. 추천은 **병합 정렬(merge sort)**:
 

@@ -1,4 +1,6 @@
-# padding, margin과 마진 상쇄
+---
+title: "padding, margin과 마진 상쇄"
+---
 
 ## padding과 margin 한 번에 지정하기
 

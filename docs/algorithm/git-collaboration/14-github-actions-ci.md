@@ -1,4 +1,6 @@
-# GitHub Actions로 CI 구현하기
+---
+title: "GitHub Actions로 CI 구현하기"
+---
 
 ## Workflow와 YAML
 
