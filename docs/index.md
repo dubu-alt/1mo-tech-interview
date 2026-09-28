@@ -3,7 +3,7 @@ layout: home
 hero:
   name: "1mo.dev"
   text: "신입 개발자 전공 지식 & 기술 면접 백과사전"
-  tagline: "Codyssey AI/SW 올인원 과정에서 직접 만든 미션 기록을 개념 노트로 정리했습니다."
+  tagline: "비전공자가 공부하면서 하나씩 이해한 개념과, 면접에 자주 나올 만한 지식을 모아 보았어요."
   actions:
     - theme: brand
       text: 둘러보기
@@ -17,9 +17,12 @@ hero:
 
 ##### [제작] : 1mo
 
-이 사이트는 [Codyssey AI/SW 올인원 과정](https://usr.codyssey.kr)의 미션을 수행하며 정리한 개념 노트를 모은 개인 기술 위키입니다.
-각 글은 실제로 구현한 프로젝트(포트폴리오 사이트, Mini Redis, Mini Git, SNS DB 설계, AWS 인프라 등)를 만들면서 필요했던 개념을
-비전공자도 이해할 수 있게 풀어쓴 것입니다.
+이 사이트는 [Codyssey AI/SW 올인원 과정](https://usr.codyssey.kr)에서 공부한 내용과, 신입 개발자 기술 면접에서 자주 묻는 전공 지식을 함께 정리한 개인 기술 위키입니다.
+
+- **코디세이에서 공부한 것**: 포트폴리오 사이트, Mini Redis, Mini Git, SNS DB 설계, AWS 인프라 등 미션을 직접 구현하면서 필요했던 개념
+- **기술 면접 단골 주제**: 자료구조, 운영체제, 데이터베이스, Git처럼 면접에서 자주 나오는 개념을 추가로 공부해 정리한 내용
+
+모든 글은 비전공자도 이해할 수 있게 풀어 썼습니다.
 
 ✔️주관적인 정리 내용으로 잘못된 정보가 있을 수 있습니다. 발견하시면 [GitHub Issue](https://github.com/dubu-alt/Codyssey-B1/issues)로 알려주세요!
 
