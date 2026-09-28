@@ -57,6 +57,13 @@ html.sl-lock {
   --vp-font-family-base: '1mo Body', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   --1mo-font-sub: '1mo Sub', var(--vp-font-family-base);
   --1mo-font-title: '1mo Title', var(--vp-font-family-base);
+  /* 홈 로고 뒤에 로고 색(초록)으로 은은한 빛 번짐 */
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #5fb58f 50%, #2e7659 50%);
+  --vp-home-hero-image-filter: blur(64px);
+}
+.dark {
+  /* 어두운 배경에서는 빛 번짐을 조금 약하게 */
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #3f8f6c 50%, #1f5a42 50%);
 }
 
 /* 사이트 이름, 홈 큰 제목, 페이지 제목 */

@@ -4,6 +4,9 @@ hero:
   name: "1mo.dev"
   text: "신입 개발자 전공 지식 & 기술 면접 백과사전"
   tagline: "비전공자가 공부하면서 하나씩 이해한 개념과, 면접에 자주 나올 만한 지식을 모아 보았어요."
+  image:
+    src: /logo.png
+    alt: 1mo 로고
   actions:
     - theme: brand
       text: 둘러보기

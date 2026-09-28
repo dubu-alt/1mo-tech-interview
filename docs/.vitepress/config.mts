@@ -8,7 +8,12 @@ export default defineConfig({
   lang: 'ko-KR',
   base: '/',
   head: [
-    ['link', { rel: 'icon', href: '/favicon.svg' }],
+    // 탭 아이콘: 구형 브라우저용 ico + 선명한 png
+    ['link', { rel: 'icon', href: '/favicon.ico', sizes: '16x16 32x32 48x48' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png', sizes: '96x96' }],
+    // 아이폰 홈 화면에 추가할 때 쓰는 아이콘 (iOS는 SVG 아이콘을 쓰지 않음)
+    ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
+    ['meta', { name: 'theme-color', content: '#2e7659' }],
     // 본문 폰트는 첫 화면에 바로 필요하므로 미리 받아 둠
     ['link', { rel: 'preload', href: '/fonts/Cafe24OhsquareAir.woff2', as: 'font', type: 'font/woff2', crossorigin: '' }],
   ],
@@ -51,7 +56,7 @@ export default defineConfig({
     },
   },
   themeConfig: {
-    logo: '/favicon.svg',
+    logo: '/logo.png',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'GitHub', link: 'https://github.com/dubu-alt/Codyssey-B1' },
