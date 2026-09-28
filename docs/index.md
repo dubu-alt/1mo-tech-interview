@@ -26,3 +26,5 @@ hero:
 ---
 
 © 2026 1mo. 원본 미션 코드/문서는 [dubu-alt/Codyssey-B1](https://github.com/dubu-alt/Codyssey-B1) 에 있습니다.
+
+<small>이 사이트에는 카페24(주)가 제공한 "카페24 아네모네 에어", "카페24 아네모네", "카페24 써라운드" 폰트가 적용되어 있습니다. ([카페24 무료 폰트](https://fonts.cafe24.com/))</small>

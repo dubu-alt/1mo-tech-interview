@@ -23,3 +23,66 @@
 html.sl-lock {
   overflow: hidden;
 }
+
+/* ───────── 폰트 (카페24 무료 폰트, docs/public/fonts) ─────────
+   - 본문·메뉴: 카페24 아네모네 에어 (가볍고 깔끔해서 긴 글 읽기용)
+     굵은 글씨(**bold**, 600 이상)는 같은 계열의 카페24 아네모네로 이어서 가짜 굵기를 피함
+   - 사이트 이름·페이지 제목(H1)·홈 제목: 카페24 써라운드 (둥글고 굵은 강조용)
+   - 소제목(H2~H4)·카드 이름: 카페24 아네모네
+   - 코드: 기존 고정폭 글꼴 유지 */
+@font-face {
+  font-family: '1mo Body';
+  src: url('/fonts/Cafe24OhsquareAir.woff2') format('woff2');
+  font-weight: 100 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: '1mo Body';
+  src: url('/fonts/Cafe24Ohsquare.woff2') format('woff2');
+  font-weight: 600 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: '1mo Sub';
+  src: url('/fonts/Cafe24Ohsquare.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: '1mo Title';
+  src: url('/fonts/Cafe24Ssurround.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  --vp-font-family-base: '1mo Body', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --1mo-font-sub: '1mo Sub', var(--vp-font-family-base);
+  --1mo-font-title: '1mo Title', var(--vp-font-family-base);
+}
+
+/* 사이트 이름, 홈 큰 제목, 페이지 제목 */
+.VPNavBarTitle .title,
+.VPHero .name,
+.VPHero .text,
+.vp-doc h1,
+.cat-title {
+  font-family: var(--1mo-font-title);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+/* 소제목, 사이드바 분류 이름, 카드 이름 */
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.VPSidebarItem.level-0 > .item .text,
+.VPSidebarItem.level-1.collapsible > .item .text,
+.cat-name {
+  font-family: var(--1mo-font-sub);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+/* 본문 글자는 얇은 편이라 조금 키우고 줄 간격 여유 */
+.vp-doc p,
+.vp-doc li {
+  font-size: 16.5px;
+  line-height: 1.8;
+}

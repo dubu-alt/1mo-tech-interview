@@ -7,7 +7,11 @@ export default defineConfig({
   description: '신입 개발자 전공 지식 & 기술 면접 백과사전',
   lang: 'ko-KR',
   base: '/',
-  head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.svg' }],
+    // 본문 폰트는 첫 화면에 바로 필요하므로 미리 받아 둠
+    ['link', { rel: 'preload', href: '/fonts/Cafe24OhsquareAir.woff2', as: 'font', type: 'font/woff2', crossorigin: '' }],
+  ],
   // draft: true 인 글은 공개하지 않음
   srcExclude: draftFiles(),
   markdown: {
