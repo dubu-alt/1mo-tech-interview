@@ -91,7 +91,11 @@ export function buildSidebar(): Item[] {
       group('Database', items('cs/database')),
     ]),
     group('📌 Algorithm', [
-      group('Mini Git 구현', items('algorithm')),
+      group('정렬', items('algorithm/sort')),
+      group('탐색', items('algorithm/search')),
+      group('그래프', items('algorithm/graph')),
+      group('동적 계획법 · 기법', items('algorithm/dp')),
+      group('Mini Git 구현 (B5-2)', items('algorithm/mini-git')),
     ]),
     group('📌 Git', [
       group('Git 기초', items('git/basics')),

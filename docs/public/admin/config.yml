@@ -191,10 +191,10 @@ collections:
     sortable_fields: [title]
     preview_path: "cs/database/{{slug}}.html"
     fields: *post_fields
-  - name: algo-minigit
-    label: "Algorithm · Mini Git 구현"
+  - name: algo-sort
+    label: "Algorithm · 정렬"
     label_singular: 글
-    folder: docs/algorithm
+    folder: docs/algorithm/sort
     create: true
     delete: true
     extension: md
@@ -202,7 +202,59 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{title}}"
     summary: "{{title}}"
     sortable_fields: [title]
-    preview_path: "algorithm/{{slug}}.html"
+    preview_path: "algorithm/sort/{{slug}}.html"
+    fields: *post_fields
+  - name: algo-search
+    label: "Algorithm · 탐색"
+    label_singular: 글
+    folder: docs/algorithm/search
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "algorithm/search/{{slug}}.html"
+    fields: *post_fields
+  - name: algo-graph
+    label: "Algorithm · 그래프"
+    label_singular: 글
+    folder: docs/algorithm/graph
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "algorithm/graph/{{slug}}.html"
+    fields: *post_fields
+  - name: algo-dp
+    label: "Algorithm · 동적 계획법 · 기법"
+    label_singular: 글
+    folder: docs/algorithm/dp
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "algorithm/dp/{{slug}}.html"
+    fields: *post_fields
+  - name: algo-minigit
+    label: "Algorithm · Mini Git 구현"
+    label_singular: 글
+    folder: docs/algorithm/mini-git
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "algorithm/mini-git/{{slug}}.html"
     fields: *post_fields
   - name: git-basics
     label: "Git · Git 기초"

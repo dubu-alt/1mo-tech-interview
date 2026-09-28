@@ -55,6 +55,17 @@ while True:
 - 명령어 비교 전 `.upper()`로 통일 (대소문자 무시 요구사항)
 - `--author=Alice`, `--sort-by=date` 같은 옵션은 `=` 기준으로 key/value 분리
 
+## 이 과제에 쓰인 알고리즘
+
+Mini Git을 만들며 쓴 알고리즘은 개념별 분류로 옮겨 두었습니다. 각 글 끝의 "Mini Git에서 써 보기"에 과제용 내용이 그대로 있습니다.
+
+| 명령 | 쓰인 알고리즘 | 글 |
+|------|--------------|-----|
+| `LOG` | 위상 정렬 (부모 커밋 먼저) | [DAG와 위상 정렬](/algorithm/graph/03-dag와-위상-정렬) |
+| `PATH`, `ANCESTORS` | BFS 최단 경로, DFS 조상 찾기 | [DFS & BFS](/algorithm/search/02-dfs와-bfs) |
+| `LOG --sort-by` | 병합 정렬 (`sorted()` 금지) | [병합 정렬](/algorithm/sort/05-병합-정렬) |
+| `SEARCH` | 역색인 | [역색인](./02-역색인) |
+
 ## 정리
 
 | 개념 | 비전공자 버전 요약 |

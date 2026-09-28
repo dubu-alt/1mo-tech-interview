@@ -61,7 +61,7 @@ export const categories: Category[] = [
     id: 'algo',
     icon: '🧮',
     title: '알고리즘',
-    desc: 'Mini Git 구현: 그래프, DAG, 위상 정렬, BFS/DFS',
+    desc: '정렬 8가지, 이분 탐색, DFS/BFS, 다익스트라, DP부터 Mini Git 구현까지',
     match: under('/algorithm/'),
   },
   {
