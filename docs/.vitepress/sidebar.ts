@@ -75,7 +75,15 @@ export function buildSidebar(): Item[] {
       group('주요 기능', items('web/features')),
       group('CSS', items('web/css')),
     ]),
-    group('📌 Language', items('language/python')),
+    group('📌 Language', [
+      group('Python', [
+        group('변수와 자료형', items('language/python/basics')),
+        group('흐름 제어', items('language/python/control-flow')),
+        group('함수', items('language/python/functions')),
+        group('클래스와 객체', items('language/python/classes')),
+        group('CLI와 파일 입출력', items('language/python/cli-file')),
+      ]),
+    ]),
     group('📌 Computer Science', [
       group('Linux', items('cs/linux')),
       group('Operating System', items('cs/os')),

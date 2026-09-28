@@ -33,7 +33,7 @@ export const categories: Category[] = [
     id: 'python',
     icon: '🐍',
     title: 'Python',
-    desc: 'argparse, dataclass, 제너레이터, 데코레이터',
+    desc: '기초 문법(자료형·조건문·함수·클래스)부터 argparse, 제너레이터까지',
     match: under('/language/'),
   },
   {

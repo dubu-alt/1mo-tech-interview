@@ -74,10 +74,10 @@ collections:
     sortable_fields: [title]
     preview_path: "web/css/{{slug}}.html"
     fields: *post_fields
-  - name: python
-    label: "Language · Python"
+  - name: python-basics
+    label: "Python · 변수와 자료형"
     label_singular: 글
-    folder: docs/language/python
+    folder: docs/language/python/basics
     create: true
     delete: true
     extension: md
@@ -85,7 +85,59 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{title}}"
     summary: "{{title}}"
     sortable_fields: [title]
-    preview_path: "language/python/{{slug}}.html"
+    preview_path: "language/python/basics/{{slug}}.html"
+    fields: *post_fields
+  - name: python-control
+    label: "Python · 흐름 제어"
+    label_singular: 글
+    folder: docs/language/python/control-flow
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "language/python/control-flow/{{slug}}.html"
+    fields: *post_fields
+  - name: python-functions
+    label: "Python · 함수"
+    label_singular: 글
+    folder: docs/language/python/functions
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "language/python/functions/{{slug}}.html"
+    fields: *post_fields
+  - name: python-classes
+    label: "Python · 클래스와 객체"
+    label_singular: 글
+    folder: docs/language/python/classes
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "language/python/classes/{{slug}}.html"
+    fields: *post_fields
+  - name: python-cli
+    label: "Python · CLI와 파일 입출력"
+    label_singular: 글
+    folder: docs/language/python/cli-file
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "language/python/cli-file/{{slug}}.html"
     fields: *post_fields
   - name: cs-linux
     label: "CS · Linux"
