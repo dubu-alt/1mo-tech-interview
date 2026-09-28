@@ -123,6 +123,16 @@ const GROUPS: string[][] = [
   ['entity', '엔터티', '엔티티'],
   ['erd'],
   ['table', '테이블'],
+  ['rollback', '롤백'],
+  ['isolation', '격리', '격리수준'],
+  ['concurrency', '동시성'],
+  ['phantom', '팬텀', '유령'],
+  ['dirty', '더티'],
+  ['tuple', '튜플'],
+  ['attribute', '애트리뷰트', '속성'],
+  ['domain', '도메인'],
+  ['cardinality', '카디널리티'],
+  ['identifier', '식별자'],
 
   // 웹 / 프론트엔드
   ['css'],
