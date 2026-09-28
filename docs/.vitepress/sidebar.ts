@@ -92,7 +92,13 @@ export function buildSidebar(): Item[] {
     ]),
     group('📌 Algorithm', [
       group('Mini Git 구현', items('algorithm')),
-      group('Git 협업 (B2-2)', items('algorithm/git-collaboration')),
+    ]),
+    group('📌 Git', [
+      group('Git 기초', items('git/basics')),
+      group('브랜치', items('git/branch')),
+      group('되돌리기', items('git/undo')),
+      group('원격 저장소', items('git/remote')),
+      group('협업 (B2-2)', items('git/collaboration')),
     ]),
     group('📌 Cloud', items('cloud')),
   ]

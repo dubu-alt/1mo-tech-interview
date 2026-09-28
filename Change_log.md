@@ -2,6 +2,30 @@
 
 1mo.dev 사이트의 변경 내역을 정리한 문서입니다. 최신 변경이 위에 옵니다.
 
+## 2026-09-28 · Git 분류 추가 (Notion "Git 공부" 노트)
+
+### 왜 바꿨나
+개인 Notion에 정리해 둔 Git 명령어 노트를 사이트로 옮기면서, Algorithm 아래에 있던 Git 협업 글까지 Git 분류 하나로 모았습니다.
+Python처럼 Git 아래를 하위 분류로 나누고 개념마다 글 하나씩 두었습니다.
+
+### 추가
+- **📌 Git** 분류와 하위 분류 5개 (폴더: `docs/git/<분류>/`)
+  - **Git 기초** (`basics`): 명령어 한눈에 보기 / 커밋 히스토리 보기 (log·blame·show) / 태그 / .gitignore
+  - **브랜치** (`branch`): 브랜치란? / HEAD와 브랜치 / Merge와 충돌 / Merge 심화 (Fast-forward·3-way) / rebase / cherry-pick
+  - **되돌리기** (`undo`): reset / reset vs checkout (Detached HEAD) / reflog / revert / stash
+  - **원격 저장소** (`remote`): origin과 upstream / push·pull·fetch
+- Notion 노트의 그림 61장 (`docs/public/images/git/`, 가로 1400px 넘는 그림은 줄임)
+- 글마다 끝에 "정리" 섹션
+- 관리자 페이지에 "Git · Git 기초" 등 하위 분류 5개 추가
+- 하단 독에 Git 버튼 추가, 검색어 사전에 reset·stash·체리픽 등 Git 용어 추가
+
+### 변경
+- 기존 "Git 협업 (B2-2)" 글 7개를 `algorithm/git-collaboration`에서 `git/collaboration`으로 옮김 (Git → 협업)
+- 홈의 "Git 협업" 카드를 "Git" 카드로 바꿈
+- 하단 독 버튼이 하나 늘어서 좁은 화면(640·400·350px 이하)의 버튼 크기를 조금 줄임
+- Notion 노트 정리: 붙여넣기 중 사라진 `*` 기호 복구(.gitignore 패턴 등), 오타 수정(`gti merge` 등), 강의 진행 말투("이전 노트에서는" 등)와 강의용 예시 계정·주소를 일반 예시로 바꿈
+- 사이트 전체 글: 74개 → 91개
+
 ## 2026-09-28 · Python 기초 문법 추가 + 하위 분류 5개로 정리
 
 ### 왜 바꿨나

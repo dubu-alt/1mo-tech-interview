@@ -62,14 +62,14 @@ export const categories: Category[] = [
     icon: '🧮',
     title: '알고리즘',
     desc: 'Mini Git 구현: 그래프, DAG, 위상 정렬, BFS/DFS',
-    match: (l) => l.startsWith('/algorithm/') && !l.startsWith('/algorithm/git-collaboration/'),
+    match: under('/algorithm/'),
   },
   {
     id: 'git',
     icon: '🤝',
-    title: 'Git 협업',
-    desc: 'PR, 머지 전략, 브랜치 보호, 코드 리뷰, CI',
-    match: under('/algorithm/git-collaboration/'),
+    title: 'Git',
+    desc: 'reset, 브랜치, merge, rebase, stash부터 PR과 브랜치 전략까지',
+    match: under('/git/'),
   },
   {
     id: 'cloud',
@@ -92,7 +92,8 @@ export const dockSections: DockSection[] = [
   { id: 'web', label: 'Web', icon: 'globe', match: under('/web/') },
   { id: 'language', label: 'Language', icon: 'code', match: under('/language/') },
   { id: 'cs', label: 'Computer Science', icon: 'cpu', match: under('/cs/') },
-  { id: 'algorithm', label: 'Algorithm', icon: 'branch', match: under('/algorithm/') },
+  { id: 'algorithm', label: 'Algorithm', icon: 'grid', match: under('/algorithm/') },
+  { id: 'git', label: 'Git', icon: 'branch', match: under('/git/') },
   { id: 'cloud', label: 'Cloud', icon: 'cloud', match: under('/cloud/') },
 ]
 

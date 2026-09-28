@@ -348,7 +348,7 @@ watch(
 @media (max-width: 640px) {
   .dock-wrap { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
   .dock { gap: 2px; padding: 6px; border-radius: 16px; }
-  .dock-btn { width: 38px; height: 38px; border-radius: 10px; }
+  .dock-btn { width: 36px; height: 36px; border-radius: 10px; }
   .dock-fold { width: 26px; }
   .dock-icon { width: 19px; height: 19px; }
   .dock-sep { margin: 0 2px; height: 20px; }
@@ -356,13 +356,13 @@ watch(
   .dock-fab { width: 44px; height: 44px; }
 }
 @media (max-width: 400px) {
-  .dock-btn { width: 35px; height: 35px; }
-  .dock-fold { width: 24px; }
+  .dock-btn { width: 32px; height: 32px; }
+  .dock-fold { width: 22px; }
   .dock-icon { width: 18px; height: 18px; }
 }
 @media (max-width: 350px) {
-  .dock-btn { width: 31px; height: 31px; }
-  .dock-fold { width: 22px; }
+  .dock-btn { width: 28px; height: 28px; }
+  .dock-fold { width: 20px; }
   .dock-icon { width: 16px; height: 16px; }
 }
 

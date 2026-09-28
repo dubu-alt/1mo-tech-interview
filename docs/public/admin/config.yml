@@ -204,10 +204,10 @@ collections:
     sortable_fields: [title]
     preview_path: "algorithm/{{slug}}.html"
     fields: *post_fields
-  - name: algo-git
-    label: "Algorithm · Git 협업"
+  - name: git-basics
+    label: "Git · Git 기초"
     label_singular: 글
-    folder: docs/algorithm/git-collaboration
+    folder: docs/git/basics
     create: true
     delete: true
     extension: md
@@ -215,7 +215,59 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{title}}"
     summary: "{{title}}"
     sortable_fields: [title]
-    preview_path: "algorithm/git-collaboration/{{slug}}.html"
+    preview_path: "git/basics/{{slug}}.html"
+    fields: *post_fields
+  - name: git-branch
+    label: "Git · 브랜치"
+    label_singular: 글
+    folder: docs/git/branch
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "git/branch/{{slug}}.html"
+    fields: *post_fields
+  - name: git-undo
+    label: "Git · 되돌리기"
+    label_singular: 글
+    folder: docs/git/undo
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "git/undo/{{slug}}.html"
+    fields: *post_fields
+  - name: git-remote
+    label: "Git · 원격 저장소"
+    label_singular: 글
+    folder: docs/git/remote
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "git/remote/{{slug}}.html"
+    fields: *post_fields
+  - name: git-collab
+    label: "Git · 협업"
+    label_singular: 글
+    folder: docs/git/collaboration
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "git/collaboration/{{slug}}.html"
     fields: *post_fields
   - name: cloud
     label: "Cloud"
