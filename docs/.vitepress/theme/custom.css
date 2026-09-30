@@ -93,3 +93,40 @@ html.sl-lock {
   font-size: 16.5px;
   line-height: 1.8;
 }
+
+/* ───────── 모바일 표 ─────────
+   좁은 화면에서는 표가 화면 폭에 억지로 맞춰지면서 한글이 한 글자씩 세로로 쪼개지던 문제가 있었음.
+   - 칸마다 최소 폭을 주고, 한글은 단어 단위로만 줄바꿈 (keep-all)
+   - 표가 화면보다 넓어지면 표 안에서 가로로 밀어서 봄 (VitePress 기본 overflow-x: auto)
+   - 첫 번째 칸(항목 이름)은 가로로 밀어도 왼쪽에 고정되어 어떤 행인지 계속 보이게 함 */
+@media (max-width: 768px) {
+  .vp-doc table {
+    font-size: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .vp-doc th,
+  .vp-doc td {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    padding: 8px 12px;
+    line-height: 1.6;
+  }
+  .vp-doc th {
+    white-space: nowrap;
+  }
+  .vp-doc td {
+    min-width: 7.5em;
+  }
+  .vp-doc tr > :first-child {
+    position: sticky;
+    left: -1px;
+    z-index: 1;
+    max-width: 40vw;
+    background-color: var(--vp-c-bg);
+    box-shadow: inset -1px 0 0 var(--vp-c-divider);
+  }
+  .vp-doc tr:nth-child(2n) > :first-child,
+  .vp-doc thead tr > :first-child {
+    background-color: var(--vp-c-bg-soft);
+  }
+}
