@@ -152,6 +152,19 @@ collections:
     sortable_fields: [title]
     preview_path: "cs/linux/{{slug}}.html"
     fields: *post_fields
+  - name: cs-arch
+    label: "CS · 컴퓨터 구조"
+    label_singular: 글
+    folder: docs/cs/computer-architecture
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cs/computer-architecture/{{slug}}.html"
+    fields: *post_fields
   - name: cs-os
     label: "CS · 운영체제"
     label_singular: 글

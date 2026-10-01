@@ -86,6 +86,7 @@ export function buildSidebar(): Item[] {
     ]),
     group('📌 Computer Science', [
       group('Linux', items('cs/linux')),
+      group('Computer Architecture', items('cs/computer-architecture')),
       group('Operating System', items('cs/os')),
       group('Data Structure', items('cs/data-structure')),
       group('Database', items('cs/database')),

@@ -39,9 +39,9 @@ export const categories: Category[] = [
   {
     id: 'os',
     icon: '🐧',
-    title: '운영체제 · Linux',
-    desc: '권한, 프로세스, 메모리, 데드락까지 실습 기반 OS 개념',
-    match: under('/cs/linux/', '/cs/os/'),
+    title: '컴퓨터 구조 · 운영체제 · Linux',
+    desc: 'CPU와 캐시, 프로세스, 스케줄링, 메모리 관리, 데드락, 리눅스 실습',
+    match: under('/cs/linux/', '/cs/os/', '/cs/computer-architecture/'),
   },
   {
     id: 'ds',
