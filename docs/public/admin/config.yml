@@ -28,10 +28,10 @@ slug:
   sanitize_replacement: "-"
 
 collections:
-  - name: web-features
-    label: "Web · 주요 기능"
+  - name: web-knowledge
+    label: "Web · 웹 지식"
     label_singular: 글
-    folder: docs/web/features
+    folder: docs/web/knowledge
     create: true
     delete: true
     extension: md
@@ -39,7 +39,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{title}}"
     summary: "{{title}}"
     sortable_fields: [title]
-    preview_path: "web/features/{{slug}}.html"
+    preview_path: "web/knowledge/{{slug}}.html"
     fields: &post_fields
       - label: 제목
         name: title
@@ -61,6 +61,19 @@ collections:
         widget: markdown
         modes: [raw, rich_text]
         hint: 제목(#)은 쓰지 않아도 돼요. ## 소제목부터 쓰면 돼요.
+  - name: web-features
+    label: "Web · 주요 기능"
+    label_singular: 글
+    folder: docs/web/features
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "web/features/{{slug}}.html"
+    fields: *post_fields
   - name: web-css
     label: "Web · CSS"
     label_singular: 글

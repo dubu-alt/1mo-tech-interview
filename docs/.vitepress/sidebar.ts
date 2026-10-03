@@ -72,6 +72,7 @@ const group = (text: string, children: Item[]): Item => ({ text, collapsed: true
 export function buildSidebar(): Item[] {
   return [
     group('📌 Web', [
+      group('웹 지식', items('web/knowledge')),
       group('주요 기능', items('web/features')),
       group('CSS', items('web/css')),
     ]),

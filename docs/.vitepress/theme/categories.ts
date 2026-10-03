@@ -18,9 +18,9 @@ export const categories: Category[] = [
   {
     id: 'web',
     icon: '🧩',
-    title: '웹 기능 구현',
-    desc: '반응형, 다크 모드, API 연동 등 포트폴리오 기능과 JS 설계',
-    match: under('/web/features/'),
+    title: '웹 지식 · 기능 구현',
+    desc: '브라우저 렌더링, HTTP, REST, 쿠키·세션, JWT, 웹 보안부터 포트폴리오 기능 구현까지',
+    match: under('/web/knowledge/', '/web/features/'),
   },
   {
     id: 'css',
