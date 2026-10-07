@@ -5,7 +5,7 @@ sidebar: "CSR과 SSR"
 
 **CSR(Client Side Rendering)은 브라우저가 자바스크립트로 화면을 직접 그리는 방식이고, SSR(Server Side Rendering)은 서버가 화면(HTML)을 다 만들어서 보내 주는 방식**입니다. 둘의 차이는 "완성된 HTML을 누가 만드느냐"입니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - 렌더링을 **어디서** 하느냐에 따라 이름이 갈립니다.
   - **SSR**: 서버에서 HTML을 완성해서 보냅니다.
@@ -56,6 +56,18 @@ CSR은 사용자 행동에 따라 **필요한 부분만** 다시 불러오므로
  브라우저 ◀─JSON 데이터── 서버
    → JS가 HTML을 만들어서 화면에 그림
 ```
+
+같은 흐름을 시간축 위에 그리면 차이가 더 잘 보입니다. 그림의 **FCP**(First Contentful Paint)는 화면에 내용이 처음 보이는 시점, **TTI**(Time to Interactive)는 버튼을 눌러도 반응하기 시작하는 시점입니다. `net`줄은 네트워크 요청, `JS`줄은 자바스크립트 실행입니다.
+
+SSR은 서버가 그려 둔 HTML이 도착하자마자 내용이 보이고(FCP), 작은 JS만 실행하면 바로 눌러볼 수 있습니다(TTI).
+
+![SSR 시간축: 서버 렌더링으로 받은 HTML 덕분에 FCP와 TTI가 거의 붙어 있다](/images/web/csr-ssr-ssr-timeline.png)
+
+CSR은 빈 HTML을 받은 뒤 `bundle.js`를 내려받고 `render(app)`을 실행해야 화면이 완성됩니다. 그동안 사용자는 빈 화면이나 로딩 표시만 보게 됩니다.
+
+![CSR 시간축: HTML을 받은 뒤 JS 묶음을 내려받아 실행할 때까지 화면 그리기가 막혀 있다](/images/web/csr-ssr-csr-timeline.png)
+
+*그림 출처: [web.dev - Rendering on the Web](https://web.dev/articles/rendering-on-the-web) (CC BY 4.0)*
 
 ## CSR의 장단점
 
@@ -109,6 +121,12 @@ CSR은 사용자 행동에 따라 **필요한 부분만** 다시 불러오므로
 - 비유: 하이드레이션(hydration)은 "물을 준다"는 뜻입니다. 바싹 마른 건조 식품(정적 HTML)에 물(JS)을 부어 먹을 수 있는 상태로 되살리는 것과 같습니다.
 - 첫 화면은 HTML로 빠르게 보여 주고, JS가 도착하면 버튼 클릭 같은 이벤트를 연결합니다.
 - 하이드레이션이 끝난 뒤에는 CSR처럼 동작합니다. 이 사이트도 첫 페이지는 HTML로 뜨지만, 이후 왼쪽 메뉴로 다른 글을 누르면 새로 고침 없이 SPA처럼 이동합니다.
+
+아래 그림처럼 서버가 만든 HTML 덕분에 내용은 일찍 보이지만(FCP), JS를 받아 `render(app, DATA)`로 이벤트를 연결하기 전까지는 눌러도 반응하지 않습니다(TTI). 앞에서 말한 "보이지만 누를 수 없는 시간"이 바로 FCP와 TTI 사이입니다.
+
+![하이드레이션 시간축: 서버 렌더링으로 내용은 일찍 보이지만 JS를 내려받아 실행할 때까지 조작은 막혀 있다](/images/web/csr-ssr-hydration-timeline.png)
+
+*그림 출처: [web.dev - Rendering on the Web](https://web.dev/articles/rendering-on-the-web) (CC BY 4.0)*
 
 | 방식 | HTML을 만드는 때 | 만드는 곳 | 어울리는 서비스 |
 | --- | --- | --- | --- |

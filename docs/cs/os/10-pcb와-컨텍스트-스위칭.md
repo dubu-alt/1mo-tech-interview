@@ -5,7 +5,7 @@ sidebar: "PCB와 컨텍스트 스위칭"
 
 PCB(Process Control Block)는 **운영체제가 프로세스 하나하나의 정보를 적어 두는 카드**이고, 컨텍스트 스위칭(Context Switching)은 **CPU에서 실행 중인 프로세스를 다른 프로세스로 바꿀 때, 지금 상태를 PCB에 저장하고 다음 프로세스의 상태를 PCB에서 꺼내 오는 과정**입니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - CPU는 한 번에 하나의 프로세스만 실행할 수 있습니다(코어 하나 기준). 그런데도 음악을 들으면서 문서를 쓸 수 있는 이유는, 운영체제가 아주 짧은 시간마다 프로세스를 **번갈아 바꿔 끼우기** 때문입니다.
 - 비유: 혼자서 여러 손님의 상담을 번갈아 하는 **상담사**를 떠올려 보세요.
@@ -34,6 +34,14 @@ PCB(Process Control Block)는 **운영체제가 프로세스 하나하나의 정
 ## PCB (Process Control Block)
 
 PCB는 **프로세스 메타데이터를 저장해 두는 곳**입니다. PCB 하나에는 프로세스 하나의 정보가 담깁니다. 운영체제(커널)가 자기 메모리 영역에 만들어 관리하기 때문에, 일반 프로그램은 PCB를 직접 고칠 수 없습니다.
+
+아래 그림처럼 저장장치에 있던 프로그램이 실행되어 프로세스가 되면, 메모리에 code, data, stack 영역이 만들어지고 그와 함께 그 프로세스를 설명하는 PCB도 하나 만들어집니다.
+
+![저장장치의 프로그램이 실행되면 code, data, stack 영역과 함께 PCB가 생기는 모습](/images/os/pcb-program-to-process.png)
+
+*그림 출처: [gyoogle 기술 면접 정리, Process Management & PCB](https://gyoogle.dev/blog/computer-science/operating-system/Process%20Management%20%26%20PCB.html)*
+
+PCB 하나에 들어 있는 내용은 다음과 같습니다.
 
 ```text
 ┌──────────────────────────────┐

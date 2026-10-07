@@ -4,7 +4,7 @@ title: "REST API"
 
 REST는 **웹(HTTP)이 원래 가진 장점을 그대로 살려서, 모든 것을 "자원(명사)"으로 보고 주소(URI)로 이름 붙인 뒤 HTTP 메서드(동사)로 다루자는 설계 방식**이고, REST API는 이 방식을 따라 만든 API입니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - REST는 Representational State Transfer(표현 상태 전송)의 줄임말입니다. 2000년에 HTTP 표준을 만든 사람 중 한 명인 로이 필딩(Roy Fielding)이 박사 논문에서 정리했습니다.
 - 비유: 잘 정리된 도서관입니다.
@@ -99,6 +99,12 @@ HATEOAS(Hypermedia As The Engine Of Application State)는 웹 페이지에서 �
 ### 5. 계층화 시스템 (Layered System)
 
 클라이언트는 자신이 실제 서버와 이야기하는지, 중간의 로드 밸런서, 캐시 서버, API 게이트웨이와 이야기하는지 몰라도 됩니다. 그래서 중간에 보안, 캐시, 부하 분산 계층을 자유롭게 끼워 넣을 수 있습니다.
+
+아래 그림처럼 요청은 여러 프록시를 거쳐 서버에 닿고, 응답도 같은 길을 되돌아옵니다. 클라이언트는 바로 앞의 한 칸하고만 이야기하면 됩니다.
+
+![계층화 시스템: 클라이언트의 요청이 프록시 두 대를 거쳐 서버에 전달되고 응답이 같은 경로로 돌아옴](/images/web/rest-api-layered-system.png)
+
+*그림 출처: [MDN, Overview of HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview) (CC BY-SA 2.5)*
 
 ### 6. 코드 온 디맨드 (Code on Demand, 선택)
 

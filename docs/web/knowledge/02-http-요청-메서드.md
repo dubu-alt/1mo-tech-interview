@@ -5,7 +5,7 @@ sidebar: "HTTP 요청 메서드"
 
 HTTP 요청 메서드는 **클라이언트(브라우저, 앱)가 서버에게 "이 자원으로 무엇을 하고 싶은지"를 알려 주는 동사**입니다. 같은 주소(`/users/1`)라도 GET을 보내면 "보여 주세요", DELETE를 보내면 "지워 주세요"라는 뜻이 됩니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - 주소(URL)는 **무엇을**(명사), 메서드는 **어떻게**(동사)를 나타냅니다.
 - 비유: 도서관 창구에 책 번호가 적힌 쪽지를 내미는 상황입니다.
@@ -30,9 +30,15 @@ Content-Length: 11
 {"age": 21}                      ← 본문(body): 서버에 보낼 데이터
 ```
 
+요청과 응답은 모두 **시작 줄, 헤더, 빈 줄, 본문** 순서로 생겼습니다. 요청의 시작 줄에는 메서드가, 응답의 시작 줄에는 [상태 코드](/web/knowledge/03-http-상태-코드)가 들어갑니다.
+
+![HTTP 요청과 응답 메시지의 구조: 시작 줄, 헤더, 빈 줄, 본문](/images/web/http-methods-message-anatomy.png)
+
+*그림 출처: [MDN, HTTP messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages) (CC BY-SA 2.5)*
+
 GET처럼 데이터를 받기만 하는 요청은 보통 본문이 없고, POST/PUT/PATCH처럼 데이터를 보내는 요청은 본문에 JSON 같은 내용을 담습니다.
 
-## 메서드 한눈에 보기
+## 메서드별 하는 일
 
 | 메서드 | 하는 일 | 본문 | 대표 예 |
 | --- | --- | --- | --- |
@@ -136,6 +142,14 @@ GET과 똑같이 요청하지만 **응답 본문 없이 헤더만** 받습니다
 | PATCH | X | X (보장 안 함) | 조건부 (거의 안 함) |
 | CONNECT | X | X | X |
 
+같은 내용을 요청·응답 본문 유무까지 넣어 색으로 정리하면 아래와 같습니다.
+
+![HTTP 메서드별 요청 본문, 응답 본문, 안전, 멱등, 캐시 가능 여부 비교표](/images/web/http-methods-table.png)
+
+*그림 출처: [gyoogle, HTTP Request Methods](https://gyoogle.dev/blog/web-knowledge/HTTP%20Request%20Methods.html)*
+
+> 참고: 그림은 POST의 캐시 가능을 Yes로 적었지만, 실제로는 응답에 "언제까지 신선한지" 정보가 있을 때만 가능한 조건부이고 거의 캐시하지 않습니다. 위 표를 기준으로 보세요.
+
 ## PUT vs PATCH
 
 둘 다 "수정"이지만, PUT은 **통째로 교체**, PATCH는 **일부만 변경**입니다.
@@ -211,6 +225,12 @@ PUT /users/1    {"name": "kim"}
    │ 3) 허용됐으니 진짜 요청: PATCH /users/1        │
    │ ───────────────────────────────────────────▶ │
 ```
+
+MDN의 예시도 같은 흐름입니다. 위쪽이 OPTIONS로 먼저 물어보는 프리플라이트, 아래쪽이 허용을 받은 뒤 보내는 본 요청입니다.
+
+![CORS 프리플라이트 흐름: OPTIONS 사전 요청과 204 응답 뒤에 본 요청 POST와 200 응답이 오감](/images/web/http-methods-cors-preflight.png)
+
+*그림 출처: [MDN, Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS) (CC BY-SA 2.5)*
 
 - 서버가 허용 헤더를 돌려주지 않으면 브라우저는 3번 요청을 보내지 않고 콘솔에 CORS 오류를 띄웁니다.
 - CORS는 **브라우저가 지키는 규칙**입니다. 그래서 curl이나 서버끼리의 요청에는 적용되지 않습니다. "Postman에서는 되는데 브라우저에서는 안 돼요"의 대부분이 이 경우입니다.

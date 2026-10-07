@@ -5,7 +5,7 @@ sidebar: "JWT"
 
 **JWT는 사용자 정보 같은 데이터(클레임)를 JSON으로 담고, 위조 여부를 확인할 수 있는 서명을 붙여 한 줄 문자열로 만든 토큰 형식입니다.** 웹 표준(RFC 7519)으로 정해져 있으며, 서버가 저장소를 뒤지지 않고 서명만 확인해서 "믿을 수 있는 토큰인지"를 판단할 수 있다는 점이 핵심입니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - [세션 방식](/web/knowledge/05-쿠키와-세션)에서는 서버가 장부(세션 저장소)를 들고 있다가 요청마다 찾아봅니다. JWT는 **필요한 정보를 토큰 안에 직접 적어 두고, 서버의 도장(서명)을 찍어서** 클라이언트에게 들려 보냅니다.
 - 비유: JWT는 **봉인 스티커가 붙은 투명 봉투**와 비슷합니다.
@@ -139,6 +139,12 @@ Payload에는 토큰에 담을 정보가 들어갑니다. 정보 한 조각(이�
 [6] 다시 API 요청         → 새 Access Token으로 정상 처리
 [7] 2주 뒤 Refresh Token도 만료 → 다시 로그인
 ```
+
+같은 흐름을 그림으로 보면 다음과 같습니다. (A)~(B)에서 두 토큰을 받고, (C)~(D)처럼 Access Token으로 자원을 쓰다가, (E)~(F)에서 만료 오류가 나면 (G)~(H)에서 Refresh Token으로 새 Access Token을 받습니다.
+
+![Refresh Token 흐름: 클라이언트가 인가 서버에서 Access Token과 Refresh Token을 받고, 자원 서버에서 Invalid Token Error를 받으면 Refresh Token으로 새 Access Token을 발급받음](/images/web/jwt-refresh-token-flow.jpg)
+
+*그림 출처: [gyoogle, JWT (JSON Web Token)](https://gyoogle.dev/blog/web-knowledge/JWT.html)*
 
 - Access Token을 도둑맞아도 **짧은 시간 안에 쓸모가 없어지므로** 피해가 줄어듭니다.
 - Refresh Token은 서버에 저장해 두면, 로그아웃하거나 수상한 사용이 보일 때 지워서 더 이상 재발급을 못 하게 막을 수 있습니다.

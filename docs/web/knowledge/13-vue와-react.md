@@ -7,12 +7,16 @@ sidebar: "Vue와 React"
 
 > 이 사이트를 만든 VitePress도 Vue로 만들어졌습니다. 홈 화면의 카드 목록, 하단 독, 검색창이 모두 Vue 컴포넌트입니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - 두 라이브러리 모두 **"데이터(상태)만 바꾸면 화면은 알아서 따라온다"** 는 생각에서 출발합니다. 개발자가 `document.querySelector`로 요소를 찾아 글자를 하나하나 고치던 방식에서 벗어나게 해 줍니다.
 - 비유하면 둘 다 **자동 업데이트되는 전광판**입니다.
   - **Vue**는 전광판에 **센서**가 달려 있어서, 숫자 판(데이터)을 손으로 그냥 바꿔 끼우면 센서가 알아채고 그 숫자를 쓰는 칸만 다시 켭니다.
   - **React**는 **"바꿔 주세요" 버튼**(setter 함수)을 눌러야 합니다. 버튼이 눌리면 그 전광판 구역(컴포넌트)을 통째로 다시 계산한 뒤, 이전 화면과 달라진 칸만 실제로 바꿉니다.
+
+![Vue.js와 React 로고를 나란히 놓은 비교 이미지](/images/web/vue-react-1.png)
+
+*그림 출처: [Medium - 난 React와 Vue에서 완전히 같은 앱을 만들었다](https://medium.com/@erwinousy/%EB%82%9C-react%EC%99%80-vue%EC%97%90%EC%84%9C-%EC%99%84%EC%A0%84%ED%9E%88-%EA%B0%99%EC%9D%80-%EC%95%B1%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%97%88%EB%8B%A4-%EC%9D%B4%EA%B2%83%EC%9D%80-%EA%B7%B8-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%9D%B4%EB%8B%A4-5cffcbfe287f)*
 
 ## 공통점
 
@@ -33,6 +37,12 @@ sidebar: "Vue와 React"
                            ▼
                  달라진 부분만 실제 DOM에 반영 (patch)
 ```
+
+아래 그림은 메뉴에서 선택된 항목이 풀리는 경우입니다. 이전 가상 DOM(왼쪽)과 새 가상 DOM(가운데)을 비교하면 첫 번째 `li`의 `className`만 달라졌으므로, 실제 DOM(오른쪽)에서는 `class="selected"` 하나만 지웁니다. 나머지 요소는 건드리지 않습니다.
+
+![가상 DOM 비교: 이전과 새 가상 DOM에서 달라진 className만 찾아 실제 DOM에 반영하는 모습](/images/web/vue-react-virtual-dom.png)
+
+*그림 출처: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:React-example-virtual-dom-diff.svg) (CC BY-SA 4.0)*
 
 ### 단방향 데이터 흐름
 
@@ -99,7 +109,7 @@ export default function Counter() {
 
 React에서 객체를 직접 고치면 안 되는 이유는, React가 이전 값과 새 값을 `Object.is`로 비교해서 "같은 객체"면 바뀌지 않았다고 판단하기 때문입니다. 반대로 Vue는 객체 안의 값이 바뀌는 순간을 Proxy가 직접 잡아냅니다.
 
-### 한눈에 비교
+### 항목별 비교
 
 | 구분 | Vue | React |
 | --- | --- | --- |

@@ -5,7 +5,7 @@ sidebar: "웹 서버와 WAS"
 
 **웹 서버(Web Server)는 미리 만들어 둔 파일(정적 콘텐츠)을 그대로 돌려주는 서버이고, WAS(Web Application Server)는 요청이 올 때마다 프로그램을 실행해서 결과(동적 콘텐츠)를 새로 만들어 돌려주는 서버**입니다. 실제 서비스에서는 둘을 나눠서 웹 서버를 앞에, WAS를 뒤에 두는 구성을 많이 씁니다.
 
-## 핵심 아이디어
+## 한눈에 보기
 
 - 웹에서 주고받는 내용은 크게 두 종류입니다.
   - **정적 콘텐츠**: 누가 언제 요청해도 똑같은 파일 (HTML, CSS, 이미지, JS 파일)
@@ -26,6 +26,12 @@ sidebar: "웹 서버와 WAS"
                               │
                               └──▶ 조회 결과로 HTML(또는 JSON)을 새로 만들어 전달
 ```
+
+아래 그림의 왼쪽이 정적 요청, 오른쪽이 동적 요청입니다. 웹 서버는 저장된 파일을 꺼내 그대로 돌려주고, WAS는 같은 주소로 요청이 와도 Alice와 Bob에게 각각 다른 결과를 만들어 돌려줍니다.
+
+![정적 페이지와 동적 페이지: 웹 서버는 파일을 그대로, WAS는 서블릿이 사람마다 다른 응답을 만든다](/images/web/web-server-vs-was-1.png)
+
+*그림 출처: [Heee's Development Blog - Web Server와 WAS의 차이와 웹 서비스 구조](https://gmlwjd9405.github.io/2018/10/27/webserver-vs-was.html)*
 
 ### 정적 페이지 (Static Pages)
 
@@ -73,6 +79,10 @@ sidebar: "웹 서버와 WAS"
 
 - HTTP를 통해 애플리케이션을 실행해 주는 **미들웨어**입니다. 미들웨어는 운영체제와 애플리케이션 사이에서 공통 기능(통신, 스레드 관리, DB 연결 등)을 대신 처리해 주는 소프트웨어입니다.
 - 자바 진영에서는 JSP와 서블릿을 실행시켜 주는 부품을 **웹 컨테이너(서블릿 컨테이너)** 라고 부르고, WAS는 이 컨테이너를 품고 있습니다. 그래서 흔히 **WAS = 웹 서버 기능 + 웹 컨테이너**라고 설명합니다.
+
+![WAS의 구조: 요청을 받아 넘기는 웹 서버 부분과 JSP·서블릿을 실행하는 웹 컨테이너, 그리고 DB 연결](/images/web/web-server-vs-was-2.png)
+
+*그림 출처: [Heee's Development Blog - Web Server와 WAS의 차이와 웹 서비스 구조](https://gmlwjd9405.github.io/2018/10/27/webserver-vs-was.html)*
 
 ### WAS의 주요 기능
 
@@ -129,6 +139,12 @@ sidebar: "웹 서버와 WAS"
                  │
                  └──▶ 정적 파일은 여기서 바로 응답
 ```
+
+자바 서블릿 기준으로 이 구성을 더 자세히 그리면 아래와 같습니다. 웹 서버가 동적 요청을 웹 컨테이너에 넘기면, 컨테이너가 스레드를 배정하고 서블릿의 `service()`가 `doGet()`/`doPost()`를 불러 DB와 함께 결과를 만듭니다.
+
+![웹 서비스 구조: 클라이언트, 웹 서버, WAS 안의 웹 컨테이너와 스레드, 서블릿 메서드, DB](/images/web/web-server-vs-was-3.png)
+
+*그림 출처: [Heee's Development Blog - Web Server와 WAS의 차이와 웹 서비스 구조](https://gmlwjd9405.github.io/2018/10/27/webserver-vs-was.html)*
 
 자바 서블릿 기준으로, 동적 요청 하나가 처리되는 과정은 다음과 같습니다.
 
