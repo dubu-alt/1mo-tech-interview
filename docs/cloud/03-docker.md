@@ -1,6 +1,7 @@
 ---
-title: "Docker (컨테이너 · 이미지 · 배포)"
-sidebar: "Docker"
+title: Docker (컨테이너 · 이미지 · 배포)
+sidebar: Docker
+draft: false
 ---
 
 컨테이너와 이미지가 무엇인지부터, 이미지를 직접 빌드해 Docker Hub에 배포하는 과정, 실행 중인 컨테이너에 접속하는 `exec`와 `attach`의 차이까지 Docker의 기본을 한 페이지에 모았습니다.
@@ -16,6 +17,7 @@ sidebar: "Docker"
 VM은 컴퓨터 한 대 안에 컴퓨터를 통째로 하나 더 만드는 방식이라 자신만의 OS 커널을 가집니다. 반면 컨테이너는 호스트의 커널을 그대로 빌려 쓰고, 프로세스 수준에서만 격리합니다. 그래서 훨씬 가볍고 빠릅니다.
 
 ![왼쪽 VM은 앱마다 Guest OS를 따로 올리고, 오른쪽 컨테이너는 Docker Engine 위에서 OS 하나를 함께 쓰는 구조 비교](/images/cloud/docker-vs-vm.jpg)
+
 *그림 출처: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dockervsvm.jpg) (CC BY-SA 4.0)*
 
 그림에서 VM 쪽은 앱마다 **Guest OS**가 통째로 하나씩 붙어 있지만, 컨테이너 쪽은 앱과 라이브러리(Bins/Libs)만 따로 갖고 아래의 OS는 다 같이 씁니다. 이 차이가 용량과 시작 속도 차이로 이어집니다.
