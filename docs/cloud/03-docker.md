@@ -18,8 +18,6 @@ VM은 컴퓨터 한 대 안에 컴퓨터를 통째로 하나 더 만드는 방�
 
 ![왼쪽 VM은 앱마다 Guest OS를 따로 올리고, 오른쪽 컨테이너는 Docker Engine 위에서 OS 하나를 함께 쓰는 구조 비교](/images/cloud/docker-vs-vm.jpg)
 
-*그림 출처: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dockervsvm.jpg) (CC BY-SA 4.0)*
-
 그림에서 VM 쪽은 앱마다 **Guest OS**가 통째로 하나씩 붙어 있지만, 컨테이너 쪽은 앱과 라이브러리(Bins/Libs)만 따로 갖고 아래의 OS는 다 같이 씁니다. 이 차이가 용량과 시작 속도 차이로 이어집니다.
 
 | 구분 | 가상머신(VM) | 컨테이너 |
