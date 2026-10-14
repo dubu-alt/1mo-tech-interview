@@ -15,6 +15,11 @@ sidebar: "Docker"
 ### 가상머신(VM)과 뭐가 다를까
 VM은 컴퓨터 한 대 안에 컴퓨터를 통째로 하나 더 만드는 방식이라 자신만의 OS 커널을 가집니다. 반면 컨테이너는 호스트의 커널을 그대로 빌려 쓰고, 프로세스 수준에서만 격리합니다. 그래서 훨씬 가볍고 빠릅니다.
 
+![왼쪽 VM은 앱마다 Guest OS를 따로 올리고, 오른쪽 컨테이너는 Docker Engine 위에서 OS 하나를 함께 쓰는 구조 비교](/images/cloud/docker-vs-vm.jpg)
+*그림 출처: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dockervsvm.jpg) (CC BY-SA 4.0)*
+
+그림에서 VM 쪽은 앱마다 **Guest OS**가 통째로 하나씩 붙어 있지만, 컨테이너 쪽은 앱과 라이브러리(Bins/Libs)만 따로 갖고 아래의 OS는 다 같이 씁니다. 이 차이가 용량과 시작 속도 차이로 이어집니다.
+
 | 구분 | 가상머신(VM) | 컨테이너 |
 |---|---|---|
 | 격리 단위 | OS 전체 | 프로세스 |
@@ -25,10 +30,25 @@ VM은 컴퓨터 한 대 안에 컴퓨터를 통째로 하나 더 만드는 방�
 ### 이미지란?
 **이미지**는 컨테이너를 실행하는 데 필요한 모든 걸 담아둔 파일입니다. 붕어빵 틀과 붕어빵 사이의 관계로 생각하면 됩니다. 이미지가 틀이고, 그 틀로 찍어낸 결과물이 컨테이너입니다.
 
+![ubuntu:15.04 이미지 하나 위에 컨테이너 4개가 각자 얇은 읽기/쓰기 레이어만 얹어서 함께 쓰는 모습](/images/cloud/docker-sharing-layers.png)
+*그림 출처: [Docker Docs - Storage drivers](https://docs.docker.com/engine/storage/drivers/) (Apache-2.0)*
+
+틀(이미지) 하나로 붕어빵(컨테이너)을 여러 개 찍어내도 틀은 그대로입니다. 컨테이너마다 자기 변경 사항만 담는 얇은 쓰기 공간(Thin R/W layer)을 따로 갖고, 아래 이미지는 모두가 읽기 전용으로 같이 씁니다.
+
 Next.js 앱을 돌리려면 node 환경이, Django 앱을 돌리려면 Python 환경이 필요한데, 이런 기본 환경이 이미 다 준비된 이미지를 Docker Hub에서 그냥 내려받아 쓸 수 있습니다. 바닥부터 환경을 만들 필요가 없습니다.
 
 ### 이미지는 레이어로 쌓여있다
 이미지 하나는 사실 여러 개의 "레이어"가 겹겹이 쌓인 형태입니다. 그래서 이미지를 받을 때 여러 파일이 순서대로 다운로드되는 걸 볼 수 있고, 이미지를 여러 개 받다 보면 저장공간이 금방 부족해질 수 있습니다.
+
+![ubuntu:15.04 이미지의 읽기 전용 레이어 4개 위에 컨테이너용 얇은 읽기/쓰기 레이어가 올라간 구조](/images/cloud/docker-container-layers.png)
+*그림 출처: [Docker Docs - Storage drivers](https://docs.docker.com/engine/storage/drivers/) (Apache-2.0)*
+
+자물쇠가 걸린 아래 칸들이 이미지 레이어(읽기 전용)이고, 맨 위 점선 칸이 컨테이너가 실행되면서 생기는 쓰기 레이어입니다. 컨테이너 안에서 파일을 고치거나 새로 만들면 이 맨 위 칸에만 기록되고, 컨테이너를 지우면 이 칸도 같이 사라집니다.
+
+![App 1과 App 2가 각자의 소스·의존성 레이어를 갖지만 Python and pip, Debian base 레이어는 함께 쓰는 구조](/images/cloud/docker-image-layer-reuse.png)
+*그림 출처: [Docker Docs - Understanding the image layers](https://docs.docker.com/get-started/docker-concepts/building-images/understanding-image-layers/) (Apache-2.0)*
+
+레이어는 이미지끼리도 재사용됩니다. 두 앱이 같은 베이스(Debian + Python)를 쓴다면 그 부분은 한 번만 내려받고, 위에 쌓인 앱별 레이어만 따로 받습니다.
 
 ```
 docker image ls              # 받아둔 이미지 목록 확인
@@ -66,6 +86,11 @@ docker buildx build -t username/이미지명:태그 .
 빌드가 끝나면 `docker image ls`로 내 컴퓨터에 잘 만들어졌는지 확인합니다. 배포는 Docker Hub에 로그인한 뒤 진행하며, 태그를 여러 개 한 번에 올리고 싶다면 `docker image push -a username/이미지명`을 사용하면 됩니다. 업로드 후에는 Docker Hub 사이트에서 이미지와 태그가 정상적으로 올라갔는지 확인할 수 있습니다.
 
 **정리 흐름**: Dockerfile 작성 → `docker buildx build`로 이미지 빌드 → 로컬에서 확인 → Docker Hub로 배포
+
+![Client의 docker run, build, pull 명령이 Docker Host의 daemon으로 전달되고, daemon이 이미지와 컨테이너를 관리하며 Registry(Docker Hub)와 이미지를 주고받는 전체 구조](/images/cloud/docker-architecture.png)
+*그림 출처: [Docker Docs - What is Docker?](https://docs.docker.com/get-started/docker-overview/) (Apache-2.0)*
+
+터미널에서 치는 `docker` 명령(Client)은 직접 일을 하지 않고 **Docker daemon**에게 부탁만 합니다. `build`는 내 컴퓨터에 이미지를 만들고, `run`은 그 이미지로 컨테이너를 띄우고, `pull`/`push`는 Registry(Docker Hub)와 이미지를 주고받습니다.
 
 ## docker exec와 docker attach 차이
 
