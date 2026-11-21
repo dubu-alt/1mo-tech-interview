@@ -109,7 +109,10 @@ export function buildSidebar(): Item[] {
       group('원격 저장소', items('git/remote')),
       group('협업 (B2-2)', items('git/collaboration')),
     ]),
-    group('📌 Cloud', items('cloud')),
+    group('📌 Cloud', [
+      group('AWS 인프라', items('cloud/aws')),
+      ...items('cloud'),
+    ]),
   ]
 }
 

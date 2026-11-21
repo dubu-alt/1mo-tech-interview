@@ -75,7 +75,7 @@ export const categories: Category[] = [
     id: 'cloud',
     icon: '☁️',
     title: 'Cloud',
-    desc: 'AWS 인프라, AI 커밋 메시지 생성기, Docker',
+    desc: 'AWS 인프라(VPC, 보안 그룹, IAM), AI 커밋 메시지 생성기, Docker',
     match: under('/cloud/'),
   },
 ]

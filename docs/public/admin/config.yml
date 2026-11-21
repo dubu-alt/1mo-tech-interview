@@ -373,3 +373,16 @@ collections:
     sortable_fields: [title]
     preview_path: "cloud/{{slug}}.html"
     fields: *post_fields
+  - name: cloud-aws
+    label: "Cloud · AWS 인프라"
+    label_singular: 글
+    folder: docs/cloud/aws
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    preview_path: "cloud/aws/{{slug}}.html"
+    fields: *post_fields
