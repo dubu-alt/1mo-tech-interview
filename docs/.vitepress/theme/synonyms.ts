@@ -339,6 +339,19 @@ const GROUPS: string[][] = [
   ['cli'],
   ['repl'],
   ['parsing', 'parser', '파싱', '파서'],
+  ['numpy', '넘파이'],
+  ['pandas', '판다스'],
+  ['dataframe', '데이터프레임'],
+  ['outlier', '이상치'],
+  ['rfm'],
+  ['eda', '탐색적데이터분석'],
+  ['feature', '피처', '특성'],
+  ['correlation', '상관계수', '상관관계'],
+  ['cohort', '코호트'],
+  ['retention', '리텐션', '재구매율'],
+  ['clipping', 'clip', '클리핑'],
+  ['pipeline', '파이프라인'],
+  ['missing', '결측치'],
 ]
 
 // 단어 → 같은 뜻 묶음

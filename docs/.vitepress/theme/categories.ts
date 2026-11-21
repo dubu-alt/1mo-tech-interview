@@ -53,8 +53,8 @@ export const categories: Category[] = [
   {
     id: 'db',
     icon: '🗄️',
-    title: '데이터베이스',
-    desc: 'SNS 서비스 설계, 키와 관계, 정규화, ERD, 조인',
+    title: '데이터베이스 · 데이터 분석',
+    desc: 'SNS 서비스 설계, 키와 관계, 정규화, ERD, 조인부터 NumPy·Pandas 데이터 분석까지',
     match: under('/cs/database/'),
   },
   {

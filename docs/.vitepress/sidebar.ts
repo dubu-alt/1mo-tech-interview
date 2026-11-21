@@ -90,7 +90,10 @@ export function buildSidebar(): Item[] {
       group('Computer Architecture', items('cs/computer-architecture')),
       group('Operating System', items('cs/os')),
       group('Data Structure', items('cs/data-structure')),
-      group('Database', items('cs/database')),
+      group('Database', [
+        ...items('cs/database'),
+        group('데이터 분석 (A1-1)', items('cs/database/data-analysis')),
+      ]),
     ]),
     group('📌 Algorithm', [
       group('정렬', items('algorithm/sort')),
