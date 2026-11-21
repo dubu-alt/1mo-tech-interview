@@ -1,6 +1,22 @@
+import fs from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
 import { buildSidebar, draftFiles } from './sidebar'
+
+// 관리자 페이지(/admin) 설정에서 "폴더 → 분류 이름"을 읽는다
+// 사이트의 "관리자 페이지에서 열기" 버튼이 같은 글을 /admin 에서 바로 열 때 쓴다
+function adminCollections(): Record<string, string> {
+  const src = fs.readFileSync(fileURLToPath(new URL('../public/admin/config.yml', import.meta.url)), 'utf8')
+  const out: Record<string, string> = {}
+  let name = ''
+  for (const line of src.split('\n')) {
+    const n = /^\s*- name:\s*(\S+)/.exec(line)
+    if (n) name = n[1]
+    const f = /^\s*folder:\s*docs\/(\S+)/.exec(line)
+    if (f && name) out[f[1]] = name
+  }
+  return out
+}
 
 export default defineConfig({
   title: '1mo.dev',
@@ -63,6 +79,8 @@ export default defineConfig({
     ],
     // 폴더의 글을 읽어서 자동 생성 (sidebar.ts)
     sidebar: buildSidebar(),
+    // 사이트 안 관리자 모드에서 쓰는 폴더 → /admin 분류 이름
+    adminCollections: adminCollections(),
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dubu-alt' }
     ],
