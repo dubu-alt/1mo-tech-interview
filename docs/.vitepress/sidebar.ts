@@ -92,7 +92,7 @@ export function buildSidebar(): Item[] {
       group('Data Structure', items('cs/data-structure')),
       group('Database', [
         ...items('cs/database'),
-        group('데이터 분석 (A1-1)', items('cs/database/data-analysis')),
+        group('데이터 분석', items('cs/database/data-analysis')),
       ]),
     ]),
     group('📌 Algorithm', [

@@ -218,7 +218,7 @@ collections:
     preview_path: "cs/database/{{slug}}.html"
     fields: *post_fields
   - name: cs-data-analysis
-    label: "CS · 데이터 분석 (A1-1)"
+    label: "CS · 데이터 분석"
     label_singular: 글
     folder: docs/cs/database/data-analysis
     create: true
