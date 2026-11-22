@@ -7,6 +7,8 @@ backend:
   name: github
   repo: dubu-alt/1mo-tech-interview
   branch: main
+  # GitHub로 로그인할 때 거치는 중계 서버 (Cloudflare Worker, sveltia-cms-auth)
+  base_url: https://1mo-auth.vnkers94.workers.dev
   commit_messages:
     create: "docs: {{slug}} 글 추가"
     update: "docs: {{slug}} 글 수정"

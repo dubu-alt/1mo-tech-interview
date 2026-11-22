@@ -3,17 +3,25 @@
 //   → 사이트에서 로그인하면 /admin도 로그인된 상태가 되고, 반대도 마찬가지
 // - 글을 읽고 저장할 때는 GitHub API로 저장소(main)에 바로 커밋한다
 //   → GitHub Actions가 1~2분 안에 사이트에 다시 배포한다
+// - "GitHub로 로그인"은 Cloudflare Worker(sveltia-cms-auth)와 GitHub App(1mo-dev-admin)을 거친다
+//   → 팝업에서 GitHub 승인 → Worker가 토큰을 받아 이 페이지로 넘겨준다 (/admin과 같은 방식)
+//   → 토큰은 8시간마다 만료되고, 함께 받은 refresh token으로 자동 갱신한다
 import { computed, ref } from 'vue'
 
 export const REPO = 'dubu-alt/1mo-tech-interview'
 export const BRANCH = 'main'
 const KEY = 'sveltia-cms.user'
+// GitHub 로그인 중계 서버 (docs/public/admin/config.yml의 base_url과 같아야 한다)
+export const AUTH_BASE = 'https://1mo-auth.vnkers94.workers.dev'
+// /admin(Sveltia CMS)과 같은 이름의 잠금: 두 화면이 동시에 토큰을 갱신하지 않게 한다
+const REFRESH_LOCK = 'sveltia-cms.token-refresh'
 
 export interface AdminUser {
   login: string
   name?: string
   avatarURL?: string
   token: string
+  refreshToken?: string
 }
 
 export const adminUser = ref<AdminUser | null>(null)
@@ -42,7 +50,7 @@ export function watchAdmin() {
   })
 }
 
-async function gh(path: string, init: RequestInit = {}, token = adminUser.value?.token) {
+async function gh(path: string, init: RequestInit = {}, token = adminUser.value?.token, retried = false): Promise<Response> {
   const res = await fetch(`https://api.github.com${path}`, {
     ...init,
     cache: 'no-store',
@@ -53,14 +61,42 @@ async function gh(path: string, init: RequestInit = {}, token = adminUser.value?
       ...(init.headers || {}),
     },
   })
-  if (res.status === 401 && token === adminUser.value?.token) {
+  if (res.status === 401 && token && token === adminUser.value?.token) {
+    // GitHub로 로그인한 경우: 만료된 토큰을 refresh token으로 바꾸고 한 번만 다시 시도
+    if (!retried && adminUser.value?.refreshToken) {
+      const fresh = await refreshAccess(token).catch(() => null)
+      if (fresh) return gh(path, init, fresh, true)
+    }
     logout()
     throw new Error('로그인이 만료됐어요. 다시 로그인해 주세요.')
   }
   return res
 }
 
-export async function login(rawToken: string) {
+// 만료된 토큰을 새로 받는다. 다른 탭이나 /admin이 먼저 갱신했으면 그 토큰을 그대로 쓴다
+async function refreshAccess(oldToken: string): Promise<string> {
+  const run = async () => {
+    loadAdmin()
+    const cur = adminUser.value
+    if (!cur?.refreshToken) throw new Error('no refresh token')
+    if (cur.token !== oldToken) return cur.token
+    const r = await fetch(`${AUTH_BASE}/oauth/access_token`, {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ grant_type: 'refresh_token', refresh_token: cur.refreshToken }),
+    })
+    const j = r.ok ? await r.json().catch(() => null) : null
+    if (!j?.access_token) throw new Error('refresh failed')
+    const next = { ...cur, token: j.access_token, refreshToken: j.refresh_token || cur.refreshToken }
+    localStorage.setItem(KEY, JSON.stringify(next))
+    adminUser.value = next
+    return next.token as string
+  }
+  const locks = (navigator as any).locks
+  return locks ? locks.request(REFRESH_LOCK, run) : run()
+}
+
+export async function login(rawToken: string, refreshToken?: string) {
   const token = rawToken.trim()
   if (!token) throw new Error('토큰을 입력해 주세요.')
   const u = await gh('/user', {}, token)
@@ -80,9 +116,67 @@ export async function login(rawToken: string) {
     profileURL: user.html_url,
     bot: false,
     token,
+    ...(refreshToken ? { refreshToken } : {}),
   }
   localStorage.setItem(KEY, JSON.stringify(saved))
   adminUser.value = saved
+}
+
+// "GitHub로 로그인": 팝업으로 GitHub 승인 화면을 열고, 중계 서버가 넘겨준 토큰으로 로그인한다
+// (Decap/Sveltia CMS와 같은 postMessage 약속: authorizing:github → authorization:github:success:{...})
+export function loginWithGitHub(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const w = 520
+    const h = 720
+    const left = window.screenX + Math.max(0, (window.outerWidth - w) / 2)
+    const top = window.screenY + Math.max(0, (window.outerHeight - h) / 2)
+    const url = `${AUTH_BASE}/auth?provider=github&site_id=${encodeURIComponent(location.hostname)}`
+    const popup = window.open(url, '1mo-github-login', `width=${w},height=${h},left=${left},top=${top}`)
+    if (!popup) {
+      reject(new Error('팝업이 막혔어요. 이 사이트의 팝업을 허용한 뒤 다시 눌러 주세요.'))
+      return
+    }
+    const authOrigin = new URL(AUTH_BASE).origin
+    let done = false
+    const finish = (err?: Error) => {
+      if (done) return
+      done = true
+      window.removeEventListener('message', onMessage)
+      clearInterval(timer)
+      try {
+        popup.close()
+      } catch {}
+      err ? reject(err) : resolve()
+    }
+    const onMessage = async (e: MessageEvent) => {
+      if (e.origin !== authOrigin || typeof e.data !== 'string') return
+      if (e.data === 'authorizing:github') {
+        popup.postMessage('authorizing:github', authOrigin)
+        return
+      }
+      const m = /^authorization:github:(success|error):([\s\S]*)$/.exec(e.data)
+      if (!m) return
+      let content: any = {}
+      try {
+        content = JSON.parse(m[2])
+      } catch {}
+      if (m[1] === 'error' || !content.token) {
+        finish(new Error(content.error || 'GitHub 로그인에 실패했어요.'))
+        return
+      }
+      try {
+        await login(content.token, content.refreshToken)
+        finish()
+      } catch (err: any) {
+        finish(err)
+      }
+    }
+    window.addEventListener('message', onMessage)
+    // 사용자가 창을 그냥 닫은 경우 (메시지가 막 도착하는 중일 수 있어 잠깐 기다린다)
+    const timer = setInterval(() => {
+      if (popup.closed) setTimeout(() => finish(new Error('로그인 창이 닫혔어요.')), 1500)
+    }, 700)
+  })
 }
 
 export function logout() {
