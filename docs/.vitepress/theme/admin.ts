@@ -13,6 +13,9 @@ export const BRANCH = 'main'
 const KEY = 'sveltia-cms.user'
 // GitHub 로그인 중계 서버 (docs/public/admin/config.yml의 base_url과 같아야 한다)
 export const AUTH_BASE = 'https://1mo-auth.vnkers94.workers.dev'
+// 관리자로 인정하는 GitHub 계정. 저장소 쓰기 권한이 있어도 여기 없는 계정은 관리자 모드가 켜지지 않는다
+// (실제 저장은 GitHub가 저장소 권한으로 한 번 더 막는다)
+export const ADMIN_LOGINS = ['dubu-alt']
 // /admin(Sveltia CMS)과 같은 이름의 잠금: 두 화면이 동시에 토큰을 갱신하지 않게 한다
 const REFRESH_LOCK = 'sveltia-cms.token-refresh'
 
@@ -34,7 +37,7 @@ export function loadAdmin() {
   try {
     const raw = localStorage.getItem(KEY)
     const u = raw ? JSON.parse(raw) : null
-    adminUser.value = u?.token ? u : null
+    adminUser.value = u?.token && ADMIN_LOGINS.includes(u.login) ? u : null
   } catch {
     adminUser.value = null
   }
@@ -102,6 +105,7 @@ export async function login(rawToken: string, refreshToken?: string) {
   const u = await gh('/user', {}, token)
   if (!u.ok) throw new Error('토큰이 올바르지 않아요. 다시 확인해 주세요.')
   const user = await u.json()
+  if (!ADMIN_LOGINS.includes(user.login)) throw new Error(`@${user.login} 계정은 이 사이트의 관리자가 아니에요.`)
   const r = await gh(`/repos/${REPO}`, {}, token)
   const repo = r.ok ? await r.json() : null
   if (!repo?.permissions?.push) throw new Error('이 토큰으로는 글을 저장할 수 없어요. 저장소 쓰기(Contents) 권한이 필요해요.')
