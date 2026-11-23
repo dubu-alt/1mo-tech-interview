@@ -1,6 +1,7 @@
 // 한국어/영어 전환 도우미
 // - 한국어 글은 docs/..., 영어 글은 docs/en/... (같은 파일 이름)
 // - 처음 들어온 방문자는 브라우저 언어나 시간대가 한국이면 한국어, 아니면 영어로 자동 이동
+//   (화면을 그리기 전에 실행되는 config.mts의 langRedirectScript가 맡는다)
 // - 상단 KO/EN 버튼으로 바꾸면 그 선택을 기억하고, 다음부터는 자동 판단보다 선택을 따른다
 import { computed } from 'vue'
 import { useData } from 'vitepress'
@@ -22,26 +23,8 @@ export function pathFor(path: string, lang: Lang) {
   return lang === 'en' ? (base === '/' ? '/en/' : `/en${base}`) : base
 }
 
-export const langOfPath = (path: string): Lang => (/^\/en(\/|$)/.test(path) ? 'en' : 'ko')
 
-// 한국어를 쓰는 브라우저이거나 한국 시간대면 한국어
-export function detectLang(): Lang {
-  try {
-    const langs = navigator.languages?.length ? navigator.languages : [navigator.language]
-    if (langs.some((l) => /^ko\b/i.test(l || ''))) return 'ko'
-    if (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Seoul') return 'ko'
-  } catch {}
-  return 'en'
-}
 
-export function savedLang(): Lang | null {
-  try {
-    const v = localStorage.getItem(LANG_KEY)
-    return v === 'ko' || v === 'en' ? v : null
-  } catch {
-    return null
-  }
-}
 
 export function saveLang(lang: Lang) {
   try {

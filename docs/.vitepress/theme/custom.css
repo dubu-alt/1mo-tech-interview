@@ -136,3 +136,8 @@ html.sl-lock {
 .VPNavScreenTranslations {
   display: none !important;
 }
+
+/* 그림에 width/height 속성을 넣었으므로, 화면 폭에 맞게 줄어들 때 비율이 깨지지 않게 높이는 자동으로 */
+.vp-doc img[width][height] {
+  height: auto;
+}

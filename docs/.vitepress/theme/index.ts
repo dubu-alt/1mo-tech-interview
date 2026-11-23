@@ -8,7 +8,6 @@ import Spotlight from './components/Spotlight.vue'
 import NavAdmin from './components/NavAdmin.vue'
 import AdminBar from './components/AdminBar.vue'
 import NavLang from './components/NavLang.vue'
-import LangRedirect from './components/LangRedirect.vue'
 import './custom.css'
 
 export default {
@@ -18,7 +17,6 @@ export default {
       'home-hero-after': () => h(CategoryGrid),
       'layout-bottom': () => [h(Dock), h(Spotlight)],
       'nav-bar-content-after': () => [h(NavLang), h(NavAdmin)],
-      'layout-top': () => h(LangRedirect),
       'doc-before': () => h(AdminBar),
     }),
 } satisfies Theme
