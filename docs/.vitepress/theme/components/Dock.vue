@@ -53,6 +53,7 @@ const collapsed = ref(false)
 function setCollapsed(v: boolean) {
   collapsed.value = v
   hidden.value = false
+  focused.value = false // 누른 버튼이 사라지므로 포커스 상태를 초기화
   try {
     localStorage.setItem(STORAGE_KEY, v ? '1' : '0')
   } catch {}
@@ -61,7 +62,10 @@ function setCollapsed(v: boolean) {
 // ---- 스크롤 방향에 따른 자동 숨김 ----
 const hidden = ref(false)
 const ready = ref(false) // 저장된 접기 상태를 읽기 전 깜빡임 방지
-const focused = ref(false) // 키보드로 독에 들어오면 숨기지 않음
+const focused = ref(false) // 키보드(Tab)로 독에 들어왔을 때만 숨기지 않음 (마우스로 누른 뒤에는 그대로 숨김)
+function onFocusIn(e: FocusEvent) {
+  focused.value = (e.target as HTMLElement)?.matches?.(':focus-visible') ?? false
+}
 const THRESHOLD = 6 // 이만큼(px) 이상 움직였을 때만 방향으로 인정
 let lastY = 0
 let ticking = false
@@ -108,11 +112,11 @@ watch(
     class="dock-wrap"
     :class="{ ready, collapsed, hidden: hidden && !focused }"
     :aria-label="t.quickNav"
-    @focusin="focused = true"
+    @focusin="onFocusIn"
     @focusout="focused = false"
   >
-    <!-- type="transition": 독의 무한 떠다님 애니메이션 때문에 전환이 안 끝나는 문제 방지 -->
-    <Transition name="dock-swap" mode="out-in" type="transition">
+    <!-- 독과 동그란 버튼은 각자 제자리에 고정해 두고, 사라지는 쪽과 나타나는 쪽을 동시에 겹쳐서 바꾼다 -->
+    <Transition name="dock-swap">
     <div v-if="!collapsed" key="dock" class="dock">
       <a
         v-for="item in navItems"
@@ -170,29 +174,41 @@ watch(
 }
 /* 스크롤 중 자동 숨김: 화면 아래로 쏙 내려감 */
 .dock-wrap.hidden {
-  transform: translateY(calc(100% + 40px));
+  transform: translateY(calc(100% + 96px));
   opacity: 0;
 }
 .dock-wrap.hidden > * {
   pointer-events: none !important;
 }
-/* 접힌 상태: 오른쪽 아래로 */
-.dock-wrap.collapsed {
-  justify-content: flex-end;
-  padding-right: 20px;
+/* 접기/펼치기: 독은 가운데, 동그란 버튼은 오른쪽 아래에 각자 고정되어 있어서
+   상태가 바뀌어도 사라지는 쪽이 옆으로 튀지 않는다.
+   독은 접기 버튼 쪽으로 작아지며 사라지고, 동그란 버튼은 그 자리에서 커지며 나타난다 */
+/* .dock / .dock-fab 자체의 transition보다 우선하도록 클래스 두 개로 지정 */
+.dock.dock-swap-enter-active,
+.dock.dock-swap-leave-active,
+.dock-fab.dock-swap-enter-active,
+.dock-fab.dock-swap-leave-active {
+  transition: opacity 0.2s ease, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.dock-swap-enter-active,
 .dock-swap-leave-active {
-  transition: opacity 0.18s ease;
+  pointer-events: none !important;
 }
-.dock-swap-enter-from,
-.dock-swap-leave-to {
+.dock.dock-swap-enter-from,
+.dock.dock-swap-leave-to {
   opacity: 0;
+  transform: scale(0.94) translateY(6px);
+}
+.dock-fab.dock-swap-enter-from,
+.dock-fab.dock-swap-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
 }
 
 .dock-fab {
   pointer-events: auto;
-  position: relative;
+  position: absolute;
+  right: 20px;
+  bottom: 0;
   display: grid;
   place-items: center;
   width: 48px;
@@ -206,7 +222,7 @@ watch(
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.06);
   color: var(--vp-c-text-2);
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
 .dock-fab:hover {
@@ -242,15 +258,11 @@ watch(
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   backdrop-filter: blur(16px) saturate(160%);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.06);
+  transform-origin: 90% 100%;
   transition: box-shadow 0.3s;
-  animation: dock-float 4s ease-in-out infinite;
 }
 .dock:hover {
   box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-@keyframes dock-float {
-  0%, 100% { transform: translateY(-2px); }
-  50% { transform: translateY(2px); }
 }
 
 .dock-btn {
@@ -266,13 +278,13 @@ watch(
   color: var(--vp-c-text-2);
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s, color 0.2s;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s, color 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
 .dock-btn:hover {
   background: var(--vp-c-default-soft);
   color: var(--vp-c-text-1);
-  transform: translateY(-2px) scale(1.1);
+  transform: translateY(-2px) scale(1.06);
 }
 .dock-btn:active {
   transform: scale(0.95);
@@ -356,8 +368,7 @@ watch(
   .dock-fold { width: 26px; }
   .dock-icon { width: 19px; height: 19px; }
   .dock-sep { margin: 0 2px; height: 20px; }
-  .dock-wrap.collapsed { padding-right: 16px; }
-  .dock-fab { width: 44px; height: 44px; }
+  .dock-fab { right: 16px; width: 44px; height: 44px; }
 }
 @media (max-width: 400px) {
   .dock-btn { width: 32px; height: 32px; }
@@ -371,10 +382,13 @@ watch(
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dock { animation: none; }
   .dock-btn,
   .dock-fab,
-  .dock-wrap { transition: none; }
+  .dock-wrap,
+  .dock.dock-swap-enter-active,
+  .dock.dock-swap-leave-active,
+  .dock-fab.dock-swap-enter-active,
+  .dock-fab.dock-swap-leave-active { transition: none; }
 }
 @media print {
   .dock-wrap { display: none; }
