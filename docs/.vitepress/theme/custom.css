@@ -130,3 +130,9 @@ html.sl-lock {
     background-color: var(--vp-c-bg-soft);
   }
 }
+
+/* 기본 언어 메뉴 대신 상단 KO/EN 버튼(NavLang)을 쓴다: 버튼은 선택을 기억해서 자동 언어 판단보다 우선한다 */
+.VPNavBarTranslations,
+.VPNavScreenTranslations {
+  display: none !important;
+}

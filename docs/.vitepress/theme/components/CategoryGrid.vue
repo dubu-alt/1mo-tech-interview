@@ -4,14 +4,24 @@
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
 import { categories, flattenLinks } from '../categories'
+import { useLang, useT } from '../i18n'
 
 const { theme } = useData()
+const lang = useLang()
+const t = useT()
 
 const items = computed(() => {
   const links = flattenLinks(theme.value.sidebar)
   return categories.map((c) => {
     const mine = links.filter(c.match)
-    return { ...c, count: mine.length, href: mine[0] ? withBase(mine[0]) : withBase('/') }
+    const en = lang.value === 'en'
+    return {
+      ...c,
+      title: en ? c.titleEn : c.title,
+      desc: en ? c.descEn : c.desc,
+      count: mine.length,
+      href: mine[0] ? withBase(mine[0]) : withBase(en ? '/en/' : '/'),
+    }
   })
 })
 
@@ -22,15 +32,15 @@ const total = computed(() => items.value.reduce((n, c) => n + c.count, 0))
   <section id="categories" class="cat-section">
     <div class="cat-inner">
     <div class="cat-head">
-      <h2 class="cat-title">목록</h2>
-      <span class="cat-total">문서 {{ total }}개</span>
+      <h2 class="cat-title">{{ t.categories }}</h2>
+      <span class="cat-total">{{ t.docsTotal(total) }}</span>
     </div>
     <div class="cat-grid">
       <a v-for="c in items" :key="c.id" class="cat-card" :href="c.href">
         <span class="cat-icon" aria-hidden="true">{{ c.icon }}</span>
         <span class="cat-name">{{ c.title }}</span>
         <span class="cat-desc">{{ c.desc }}</span>
-        <span class="cat-count">{{ c.count }}개 문서 <span class="cat-arrow">→</span></span>
+        <span class="cat-count">{{ t.docsCount(c.count) }} <span class="cat-arrow">→</span></span>
       </a>
     </div>
     </div>

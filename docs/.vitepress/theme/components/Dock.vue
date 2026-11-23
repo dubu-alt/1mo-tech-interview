@@ -10,8 +10,11 @@ import { useData, useRoute, withBase } from 'vitepress'
 import { dockSections, flattenLinks, normalizePath } from '../categories'
 import { ICONS } from '../icons'
 import { openSpotlight } from '../spotlight'
+import { useLang, useT, stripLocale } from '../i18n'
 
 const { theme, isDark } = useData()
+const lang = useLang()
+const t = useT()
 const route = useRoute()
 
 
@@ -19,7 +22,8 @@ const current = computed(() => normalizePath(route.path))
 
 const navItems = computed(() => {
   const links = flattenLinks(theme.value.sidebar)
-  const home = { id: 'home', label: '홈', icon: 'home', href: withBase('/'), active: current.value === '/' }
+  const homePath = lang.value === 'en' ? '/en/' : '/'
+  const home = { id: 'home', label: t.value.home, icon: 'home', href: withBase(homePath), active: stripLocale(current.value) === '/' }
   const sections = dockSections.map((s) => {
     const first = links.find(s.match)
     return {
@@ -103,7 +107,7 @@ watch(
   <nav
     class="dock-wrap"
     :class="{ ready, collapsed, hidden: hidden && !focused }"
-    aria-label="빠른 이동"
+    :aria-label="t.quickNav"
     @focusin="focused = true"
     @focusout="focused = false"
   >
@@ -125,24 +129,24 @@ watch(
 
       <span class="dock-sep" aria-hidden="true" />
 
-      <button type="button" class="dock-btn" aria-label="검색" @click="openSearch">
+      <button type="button" class="dock-btn" :aria-label="t.search" @click="openSearch">
         <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.search" />
-        <span class="dock-tip">검색</span>
+        <span class="dock-tip">{{ t.search }}</span>
       </button>
-      <button type="button" class="dock-btn" :aria-label="isDark ? '라이트 모드' : '다크 모드'" @click="toggleAppearance">
+      <button type="button" class="dock-btn" :aria-label="isDark ? t.lightMode : t.darkMode" @click="toggleAppearance">
         <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="isDark ? ICONS.sun : ICONS.moon" />
-        <span class="dock-tip">{{ isDark ? '라이트 모드' : '다크 모드' }}</span>
+        <span class="dock-tip">{{ isDark ? t.lightMode : t.darkMode }}</span>
       </button>
-      <button type="button" class="dock-btn dock-fold" aria-label="독 접기" @click="setCollapsed(true)">
+      <button type="button" class="dock-btn dock-fold" :aria-label="t.foldDock" @click="setCollapsed(true)">
         <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.fold" />
-        <span class="dock-tip">접기</span>
+        <span class="dock-tip">{{ t.foldDock }}</span>
       </button>
     </div>
 
     <!-- 접힌 상태: 오른쪽 아래 동그란 버튼 하나 -->
-    <button v-else key="fab" type="button" class="dock-fab" aria-label="메뉴 펼치기" @click="setCollapsed(false)">
+    <button v-else key="fab" type="button" class="dock-fab" :aria-label="t.unfoldDock" @click="setCollapsed(false)">
       <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.grid" />
-      <span class="dock-tip">메뉴 펼치기</span>
+      <span class="dock-tip">{{ t.unfoldDock }}</span>
     </button>
     </Transition>
   </nav>

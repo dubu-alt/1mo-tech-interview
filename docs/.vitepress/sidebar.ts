@@ -55,7 +55,7 @@ function readMeta(file: string) {
 }
 
 // 폴더 하나의 글 목록 (하위 폴더는 포함하지 않음)
-function items(dir: string): Item[] {
+function itemsIn(dir: string): Item[] {
   const abs = path.join(DOCS, dir)
   if (!fs.existsSync(abs)) return []
   return fs
@@ -67,9 +67,35 @@ function items(dir: string): Item[] {
     .map(({ file, meta }) => ({ text: meta.text, link: `/${dir}/${file.replace(/\.md$/, '')}` }))
 }
 
-const group = (text: string, children: Item[]): Item => ({ text, collapsed: true, items: children })
+const groupOf = (text: string, children: Item[]): Item => ({ text, collapsed: true, items: children })
 
-export function buildSidebar(): Item[] {
+// 영어판 사이드바 묶음 이름 (영어 글은 docs/en/ 아래 같은 경로에 있다)
+const EN_LABELS: Record<string, string> = {
+  '웹 지식': 'Web Knowledge',
+  '주요 기능': 'Features',
+  '변수와 자료형': 'Variables & Types',
+  '흐름 제어': 'Control Flow',
+  '함수': 'Functions',
+  '클래스와 객체': 'Classes & Objects',
+  'CLI와 파일 입출력': 'CLI & File I/O',
+  '데이터 분석': 'Data Analysis',
+  '정렬': 'Sorting',
+  '탐색': 'Searching',
+  '그래프': 'Graphs',
+  '동적 계획법 · 기법': 'DP & Techniques',
+  'Mini Git 구현 (B5-2)': 'Building Mini Git (B5-2)',
+  'Git 기초': 'Git Basics',
+  '브랜치': 'Branches',
+  '되돌리기': 'Undoing Changes',
+  '원격 저장소': 'Remote Repositories',
+  '협업 (B2-2)': 'Collaboration (B2-2)',
+  'AWS 인프라': 'AWS Infrastructure',
+}
+
+export function buildSidebar(locale: 'ko' | 'en' = 'ko'): Item[] {
+  const en = locale === 'en'
+  const items = (dir: string) => itemsIn(en ? `en/${dir}` : dir)
+  const group = (text: string, children: Item[]): Item => groupOf(en ? EN_LABELS[text] ?? text : text, children)
   return [
     group('📌 Web', [
       group('웹 지식', items('web/knowledge')),

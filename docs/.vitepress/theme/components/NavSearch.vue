@@ -5,6 +5,9 @@
 import { onMounted, ref } from 'vue'
 import { ICONS } from '../icons'
 import { openSpotlight } from '../spotlight'
+import { useT } from '../i18n'
+
+const t = useT()
 
 const mod = ref('⌘')
 onMounted(() => {
@@ -14,9 +17,9 @@ onMounted(() => {
 
 <template>
   <div class="VPNavBarSearch">
-    <button type="button" class="ns-btn" aria-label="검색" @click="openSpotlight">
+    <button type="button" class="ns-btn" :aria-label="t.search" @click="openSpotlight">
       <svg class="ns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.search" />
-      <span class="ns-text">검색</span>
+      <span class="ns-text">{{ t.search }}</span>
       <span class="ns-keys"><kbd>{{ mod }}</kbd><kbd>K</kbd></span>
     </button>
   </div>

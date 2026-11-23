@@ -18,6 +18,20 @@ function adminCollections(): Record<string, string> {
   return out
 }
 
+// 한국어 글 ↔ 영어 글 주소 (검색엔진에 두 언어판이 있다고 알려 준다)
+function altLinks(relativePath: string) {
+  const ko = relativePath.replace(/^en\//, '')
+  const toUrl = (p: string) => 'https://1mo.dev/' + p.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '.html')
+  const koPath = fileURLToPath(new URL(`../${ko}`, import.meta.url))
+  const enPath = fileURLToPath(new URL(`../en/${ko}`, import.meta.url))
+  if (!fs.existsSync(koPath) || !fs.existsSync(enPath)) return []
+  return [
+    ['link', { rel: 'alternate', hreflang: 'ko', href: toUrl(ko) }],
+    ['link', { rel: 'alternate', hreflang: 'en', href: toUrl(`en/${ko}`) }],
+    ['link', { rel: 'alternate', hreflang: 'x-default', href: toUrl(ko) }],
+  ] as any
+}
+
 export default defineConfig({
   title: '1mo.dev',
   description: '신입 개발자 전공 지식 & 기술 면접 백과사전',
@@ -33,6 +47,31 @@ export default defineConfig({
     // 본문 폰트는 첫 화면에 바로 필요하므로 미리 받아 둠
     ['link', { rel: 'preload', href: '/fonts/Cafe24OhsquareAir.woff2', as: 'font', type: 'font/woff2', crossorigin: '' }],
   ],
+  transformHead: ({ pageData }) => altLinks(pageData.relativePath),
+  // 한국어(기본)와 영어(/en/). 언어 자동 선택과 KO/EN 버튼은 theme/i18n.ts, components/LangRedirect.vue 참고
+  locales: {
+    root: { label: '한국어', lang: 'ko-KR' },
+    en: {
+      label: 'English',
+      lang: 'en-US',
+      link: '/en/',
+      description: 'Tech interview encyclopedia for junior developers',
+      themeConfig: {
+        nav: [
+          { text: 'Home', link: '/en/' },
+          { text: 'GitHub', link: 'https://github.com/dubu-alt/Codyssey-B1' },
+        ],
+        sidebar: buildSidebar('en'),
+        outline: { level: [2, 4], label: 'On this page' },
+        docFooter: { prev: 'Previous', next: 'Next' },
+        darkModeSwitchLabel: 'Dark mode',
+        returnToTopLabel: 'Back to top',
+        sidebarMenuLabel: 'Menu',
+        langMenuLabel: 'Language',
+        notFound: { title: 'PAGE NOT FOUND', quote: 'This page does not exist, or it is only available in Korean.', linkText: 'Go to home' },
+      },
+    },
+  },
   // draft: true 인 글은 공개하지 않음
   srcExclude: draftFiles(),
   markdown: {
@@ -88,6 +127,8 @@ export default defineConfig({
     outline: { level: [2, 4], label: '이 페이지 목차' },
     docFooter: { prev: '이전', next: '다음' },
     darkModeSwitchLabel: '다크 모드',
+    sidebarMenuLabel: '메뉴',
+    langMenuLabel: '언어',
     returnToTopLabel: '맨 위로'
   }
 })

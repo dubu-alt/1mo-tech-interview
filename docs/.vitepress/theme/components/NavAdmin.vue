@@ -4,6 +4,9 @@
 // - 로그인 상태: 프로필 사진 버튼 → 관리자 페이지 열기, 로그아웃
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { adminUser, isAdmin, loadAdmin, login, loginWithGitHub, logout, watchAdmin } from '../admin'
+import { useT } from '../i18n'
+
+const t = useT()
 
 const open = ref(false) // 로그인 창
 const menu = ref(false) // 로그인 후 메뉴
@@ -62,8 +65,8 @@ function doLogout() {
       v-if="!isAdmin"
       type="button"
       class="na-btn"
-      aria-label="관리자 로그인"
-      title="관리자 로그인"
+      :aria-label="t.adminLogin"
+      :title="t.adminLogin"
       @click="open = true"
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

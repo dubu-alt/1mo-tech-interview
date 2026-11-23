@@ -16,6 +16,7 @@ import { categories, dockSections, flattenLinks, normalizePath } from '../catego
 import { ICONS } from '../icons'
 import { expandToken } from '../synonyms'
 import { closeSpotlight, openSpotlight, spotlightOpen, toggleSpotlight } from '../spotlight'
+import { useLang, useT } from '../i18n'
 
 interface Result {
   id: string
@@ -26,6 +27,8 @@ interface Result {
 }
 
 const { theme, localeIndex } = useData()
+const lang = useLang()
+const t = useT()
 const router = useRouter()
 const route = useRoute()
 
@@ -60,6 +63,13 @@ function loadIndex() {
   })
 }
 
+// 언어가 바뀌면 그 언어의 검색 인덱스를 새로 불러온다
+watch(localeIndex, () => {
+  mini.value = null
+  loading = null
+  if (spotlightOpen.value) loadIndex()
+})
+
 // ---- 분류 바로가기 (독과 같은 5개 분류) ----
 const shortcuts = computed(() => {
   const links = flattenLinks(theme.value.sidebar)
@@ -76,8 +86,8 @@ const showBubbles = computed(() => canHover.value && rowHovered.value && !query.
 
 const placeholder = computed(() =>
   hoveredShortcut.value !== null
-    ? `${shortcuts.value[hoveredShortcut.value].short} 바로가기`
-    : '무엇이든 검색해 보세요',
+    ? t.value.goTo(shortcuts.value[hoveredShortcut.value].short)
+    : t.value.searchAnything,
 )
 
 // ---- 검색 결과 ----
@@ -129,7 +139,7 @@ const results = computed<Result[]>(() => {
       return {
         id: r.id,
         title,
-        desc: [cat?.title ?? sec?.label, ...parents].filter(Boolean).join(' › '),
+        desc: [(lang.value === 'en' ? cat?.titleEn : cat?.title) ?? sec?.label, ...parents].filter(Boolean).join(' › '),
         icon: sec?.icon ?? 'file',
         html: highlight(title, [...terms, ...(r.terms || [])]),
       }
@@ -248,7 +258,7 @@ onUnmounted(() => {
         class="sl-overlay"
         role="dialog"
         aria-modal="true"
-        aria-label="문서 검색"
+        :aria-label="t.search"
         @mousedown.self="closeSpotlight"
       >
         <!-- 버블이 끈적하게 붙었다 떨어지는 효과용 SVG 필터 -->
@@ -282,19 +292,19 @@ onUnmounted(() => {
                   autocomplete="off"
                   autocapitalize="off"
                   spellcheck="false"
-                  aria-label="문서 검색"
+                  :aria-label="t.search"
                   @input="onInput"
                   @keydown="onInputKeydown"
                 />
               </div>
-              <button type="button" class="sl-close" aria-label="검색 닫기" @click="closeSpotlight">
+              <button type="button" class="sl-close" :aria-label="t.close" @click="closeSpotlight">
                 <span class="sl-close-kbd">esc</span>
-                <span class="sl-close-text">취소</span>
+                <span class="sl-close-text">{{ t.cancel }}</span>
               </button>
             </div>
 
             <!-- 모바일/터치: 검색어가 없을 때 분류 바로가기 -->
-            <nav v-if="!query" class="sl-quick" aria-label="분류 바로가기">
+            <nav v-if="!query" class="sl-quick" :aria-label="t.quickNav">
               <a
                 v-for="s in shortcuts"
                 :key="s.id"
@@ -309,7 +319,7 @@ onUnmounted(() => {
               </a>
             </nav>
 
-            <div v-if="query" ref="listEl" class="sl-results" role="listbox" aria-label="검색 결과">
+            <div v-if="query" ref="listEl" class="sl-results" role="listbox" :aria-label="t.search">
               <template v-if="results.length">
                 <a
                   v-for="(r, i) in results"
@@ -333,14 +343,14 @@ onUnmounted(() => {
                   <svg class="sl-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICONS.chevronRight" />
                 </a>
               </template>
-              <p v-else-if="mini" class="sl-empty">‘{{ query }}’에 대한 결과가 없어요</p>
-              <p v-else class="sl-empty">검색 준비 중…</p>
+              <p v-else-if="mini" class="sl-empty">{{ t.noResult(query) }}</p>
+              <p v-else class="sl-empty">{{ t.searchLoading }}</p>
             </div>
 
             <div v-if="query && results.length" class="sl-foot">
-              <span><kbd>↑</kbd><kbd>↓</kbd> 이동</span>
-              <span><kbd>Enter</kbd> 열기</span>
-              <span><kbd>Esc</kbd> 닫기</span>
+              <span><kbd>↑</kbd><kbd>↓</kbd> {{ t.move }}</span>
+              <span><kbd>Enter</kbd> {{ t.open }}</span>
+              <span><kbd>Esc</kbd> {{ t.close }}</span>
             </div>
           </div>
 
