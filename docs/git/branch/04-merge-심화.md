@@ -3,9 +3,9 @@ title: "Merge 심화 (Fast-forward · 3-way)"
 sidebar: "Merge 심화"
 ---
 
-**머지(merge)**에 관한 좀더 깊은 이야기를 해볼게요. 머지를 하면 새로운 커밋이 생긴다고 했습니다.
+<strong>머지(merge)</strong>에 관한 좀더 깊은 이야기를 해볼게요. 머지를 하면 새로운 커밋이 생긴다고 했습니다.
 
-그리고 머지를 통해서 생겨난 커밋을 **머지 커밋(merge commit)**이라고 부른다고 했는데요.
+그리고 머지를 통해서 생겨난 커밋을 <strong>머지 커밋(merge commit)</strong>이라고 부른다고 했는데요.
 
 ![](/images/git/d0526db7c86e.png)
 

@@ -111,7 +111,7 @@ git stash drop [작업 내용의 아이디]
 
 - 작업 내용의 아이디를 생략하면 가장 최근의 작업 내용이 제거됨
 
-**적용(apply)**한 작업 내용은 스택에서 **제거(drop)**해주는 게 좋습니다.
+<strong>적용(apply)</strong>한 작업 내용은 스택에서 <strong>제거(drop)</strong>해주는 게 좋습니다.
 
 그래서 **git stash apply**를 쓰고 **git stash drop**을 바로 해 줄 수 있는데요.
 

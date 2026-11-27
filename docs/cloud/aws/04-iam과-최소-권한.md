@@ -7,7 +7,7 @@ sidebar: "IAM과 최소 권한"
 
 ## IAM이란
 
-**IAM(Identity and Access Management)**은 AWS 계정 안에서 누가 어떤 작업을 할 수 있는지 정하는 서비스입니다.
+<strong>IAM(Identity and Access Management)</strong>은 AWS 계정 안에서 누가 어떤 작업을 할 수 있는지 정하는 서비스입니다.
 
 | 용어 | 뜻 |
 |---|---|

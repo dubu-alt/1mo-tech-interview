@@ -52,7 +52,7 @@ origin은 ‘근원’, ‘기원’이라는 뜻을 가집니다. 아마도 다
 이렇게 **--set-upstream(-u) 옵션**을 주면
 
 - 로컬 레포지토리에 있는 master 브랜치가
-- origin에 있는 master 브랜치를 **tracking(추적)**하는 걸로 설정됩니다.
+- origin에 있는 master 브랜치를 <strong>tracking(추적)</strong>하는 걸로 설정됩니다.
 
 **tracking이라는 건 로컬 레포지토리의 한 브랜치가 리모트 레포지토리의 한 브랜치와 연결되어 그것을 계속 바라보는 상태가 되는 것**이라고 생각하시면 됩니다. 이렇게 맺어진 연결 상태를 **tracking connection**이라고 합니다.
 

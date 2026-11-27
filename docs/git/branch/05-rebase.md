@@ -19,7 +19,7 @@ sidebar: "rebase"
 ## 3. rebase란?
 
 - `git rebase`는 "커밋을 재배치"한다는 뜻임.
-- 내가 있는 브랜치의 **베이스(기반)**를 다른 브랜치의 커밋으로 바꿔준다.
+- 내가 있는 브랜치의 <strong>베이스(기반)</strong>를 다른 브랜치의 커밋으로 바꿔준다.
 - 커밋 히스토리를 일직선으로 깔끔하게 만들어줌.
 - rebase를 하면서 충돌(conflict)이 나면 merge처럼 직접 해결해주고, `git rebase --continue`로 계속 진행함.
 
