@@ -90,6 +90,7 @@ const EN_LABELS: Record<string, string> = {
   '원격 저장소': 'Remote Repositories',
   '협업 (B2-2)': 'Collaboration (B2-2)',
   'AWS 인프라': 'AWS Infrastructure',
+  'LLM API 활용': 'Working with LLM APIs',
 }
 
 export function buildSidebar(locale: 'ko' | 'en' = 'ko'): Item[] {
@@ -137,6 +138,7 @@ export function buildSidebar(locale: 'ko' | 'en' = 'ko'): Item[] {
     ]),
     group('📌 Cloud', [
       group('AWS 인프라', items('cloud/aws')),
+      group('LLM API 활용', items('cloud/llm-api')),
       ...items('cloud'),
     ]),
   ]

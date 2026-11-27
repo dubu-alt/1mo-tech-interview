@@ -96,9 +96,9 @@ export const categories: Category[] = [
     id: 'cloud',
     icon: '☁️',
     title: 'Cloud',
-    desc: 'AWS 인프라(VPC, 보안 그룹, IAM), AI 커밋 메시지 생성기, Docker',
+    desc: 'AWS 인프라(VPC, 보안 그룹, IAM), LLM API 활용(키 관리, 마스킹, 출력 검증), Docker',
     titleEn: 'Cloud',
-    descEn: 'AWS infrastructure (VPC, security groups, IAM), an AI commit message generator, Docker',
+    descEn: 'AWS infrastructure (VPC, security groups, IAM), working with LLM APIs (key management, masking, output validation), Docker',
     match: under('/cloud/'),
   },
 ]
