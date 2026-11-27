@@ -12,6 +12,9 @@ hero:
       text: 둘러보기
       link: '#categories'
     - theme: alt
+      text: 프롬프트 모음
+      link: /prompts/
+    - theme: alt
       text: GitHub Repository
       link: https://github.com/dubu-alt/Codyssey-B1
 ---
